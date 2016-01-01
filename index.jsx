@@ -4,7 +4,7 @@ require("./node_modules/bootstrap/dist/css/bootstrap.min.css");
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, Link, hashHistory } from 'react-router';
+import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { Prismic } from 'prismic.io';
 
 const endpoint = "https://blogtemplate.prismic.io/api";
@@ -67,7 +67,6 @@ class Doc extends React.Component {
   componentDidMount() {
     Prismic.Api(endpoint, ((err, api) => {
       api.form("everything").ref(api.master()).query(Prismic.Predicates.at('document.id', this.props.params.id)).submit((err, res) => {
-        console.log("err ", err);
         if (res.results.length > 0) {
           this.setState({doc: res.results[0]});
         } else {
@@ -102,7 +101,7 @@ function NoMatch(props) {
 }
 
 ReactDOM.render((
-  <Router history={hashHistory}>
+  <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path=":type/:id" component={Doc}/>
