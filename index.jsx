@@ -6,12 +6,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { Prismic } from 'prismic.io';
+import { DocumentListContainer } from './DocumentList';
 
 const endpoint = "https://blogtemplate.prismic.io/api";
 const accessToken = null;
 
-function linkResolver() {
-  return '';
+function linkResolver(doc) {
+  return '/' + doc.type + '/' + doc.id;
 }
 
 export class App extends React.Component {
@@ -24,37 +25,6 @@ export class App extends React.Component {
 		);
 	}
 }
-
-class DocumentList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      docs: []
-    };
-  }
-  componentDidMount() {
-    Prismic.Api(this.props.endpoint, ((err, api) => {
-      api.form("everything").ref(api.master()).submit((err, res) => {
-        this.setState({docs: res.results});
-      });
-    }), this.props.accessToken);
-  }
-  render() {
-    return (
-      <ul>
-      {this.state.docs.map((doc, i) => {
-        return (<div key={doc.id}>
-        <li><Link to={'/' + doc.type + '/' + doc.id}>{doc.slug}</Link></li>
-        </div>);
-      })}
-      </ul>
-    );
-  }
-}
-DocumentList.propTypes = {
-  endpoint: React.PropTypes.string.isRequired,
-  accessToken: React.PropTypes.string
-};
 
 class Doc extends React.Component {
   constructor(props) {
@@ -91,8 +61,23 @@ class Doc extends React.Component {
 }
 
 class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { api: null };
+  }
+  componentDidMount() {
+    Prismic.Api(endpoint, ((err, api) => {
+      this.setState({api: api});
+    }));
+  }
   render() {
-    return (<DocumentList endpoint={endpoint} accessToken={accessToken} />);
+    if (!this.state.api) {
+      return (<div>Loading...</div>);
+    }
+    return (<DocumentListContainer
+                api={this.state.api}
+                linkResolver={linkResolver}
+            />);
   }
 }
 
