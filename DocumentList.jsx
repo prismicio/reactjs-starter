@@ -2,8 +2,9 @@
 
 import React from 'react';
 import { Link } from 'react-router';
+import { Prismic } from 'prismic.io';
 
-export var DocumentList = (props) => (
+export const DocumentList = (props) => (
   <ul>
     {props.docs.map((doc, i) => {
        return (<li key={doc.id}>
@@ -12,6 +13,10 @@ export var DocumentList = (props) => (
      })}
   </ul>
 );
+DocumentList.propTypes = {
+  docs: React.PropTypes.arrayOf(React.PropTypes.instanceOf(Prismic.Document)).isRequired,
+  linkResolver: React.PropTypes.func.isRequired
+};
 
 export class DocumentListContainer extends React.Component {
   constructor(props) {
@@ -30,7 +35,7 @@ export class DocumentListContainer extends React.Component {
   }
 }
 DocumentListContainer.propTypes = {
-  api: React.PropTypes.object.isRequired, // Prismic api object
+  api: React.PropTypes.instanceOf(Prismic.Api),
   linkResolver: React.PropTypes.func.isRequired,
   q: React.PropTypes.string // Prismic query
 };
