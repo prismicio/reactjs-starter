@@ -1,5 +1,3 @@
-'use strict';
-
 import { Prismic } from 'prismic.io';
 
 // Wrap Prismic calls in promises

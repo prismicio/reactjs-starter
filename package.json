@@ -15,6 +15,7 @@
     "template"
   ],
   "dependencies": {
+    "babel-plugin-transform-strict-mode": "^6.3.13",
     "babel-polyfill": "^6.3.14",
     "babel-preset-stage-0": "^6.3.13",
     "bootstrap": "3.3.5",

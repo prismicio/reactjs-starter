@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import { Prismic } from 'prismic.io';
 import { prismicApi, prismicQuery } from './prismic-es6';
