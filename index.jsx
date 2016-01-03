@@ -11,9 +11,11 @@ import { prismicApi } from './prismic-es6';
 import { DocumentListContainer } from './DocumentList';
 import Doc from './Doc';
 
+// Update these 2 constants to point to your repository
 const endpoint = "https://blogtemplate.prismic.io/api";
 const accessToken = null;
 
+// Also change the linkResolver if you change the URL scheme in the Router below
 function linkResolver(doc) {
   return '/' + doc.type + '/' + doc.id;
 }
