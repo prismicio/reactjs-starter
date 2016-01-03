@@ -7,7 +7,6 @@ import "babel-polyfill";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
-import { Prismic } from 'prismic.io';
 import { prismicApi } from './prismic-es6';
 import { DocumentListContainer } from './DocumentList';
 import Doc from './Doc';
@@ -45,13 +44,14 @@ class Home extends React.Component {
     return (<DocumentListContainer
                 api={this.state.api}
                 endpoint={endpoint}
+                accesstoken={accessToken}
                 linkResolver={linkResolver}
             />);
   }
 }
 
 function DocWrapper(props) {
-  return <Doc params={props.params} endpoint={endpoint} linkResolver={linkResolver} />;
+  return <Doc params={props.params} endpoint={endpoint} accesstoken={accessToken} linkResolver={linkResolver} />;
 }
 
 function NoMatch(props) {

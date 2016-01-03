@@ -14,7 +14,8 @@ export default React.createClass({
   propTypes: {
     params: React.PropTypes.object.isRequired,
     linkResolver: React.PropTypes.func.isRequired,
-    endpoint: React.PropTypes.string.isRequired
+    endpoint: React.PropTypes.string.isRequired,
+    accesstoken: React.PropTypes.string
   },
 
   getInitialState: function() {

@@ -25,6 +25,7 @@ export const DocumentListContainer = React.createClass({
   propTypes: {
     api: React.PropTypes.instanceOf(Prismic.Api),
     endpoint: React.PropTypes.string.isRequired,
+    accesstoken: React.PropTypes.string,
     linkResolver: React.PropTypes.func.isRequired,
     q: React.PropTypes.string // Prismic query
   },
