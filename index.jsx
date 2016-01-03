@@ -2,11 +2,15 @@
 
 require("./node_modules/bootstrap/dist/css/bootstrap.min.css");
 
+import "babel-polyfill";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { Prismic } from 'prismic.io';
+import { prismicApi } from './prismic-es6';
 import { DocumentListContainer } from './DocumentList';
+import Doc from './Doc';
 
 const endpoint = "https://blogtemplate.prismic.io/api";
 const accessToken = null;
@@ -26,49 +30,13 @@ export class App extends React.Component {
 	}
 }
 
-class Doc extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      notFound: false,
-      doc: null
-    };
-  }
-  componentDidMount() {
-    Prismic.Api(endpoint, ((err, api) => {
-      api.form("everything").ref(api.master()).query(Prismic.Predicates.at('document.id', this.props.params.id)).submit((err, res) => {
-        if (res.results.length > 0) {
-          this.setState({doc: res.results[0]});
-        } else {
-          this.setState({notFound: true});
-        }
-        this.setState({doc: res.results});
-      });
-    }), this.props.accessToken);
-  }
-
-  render() {
-    if (this.state.notFound) {
-      return (<div>Document not found</div>);
-    } else if (!this.state.doc) {
-      return (<div>Loading...</div>);
-    } else {
-      return (
-        <div dangerouslySetInnerHTML={{__html: this.state.doc.asHtml(linkResolver)}} />
-      );
-    }
-  }
-}
-
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = { api: null };
   }
   componentDidMount() {
-    Prismic.Api(endpoint, ((err, api) => {
-      this.setState({api: api});
-    }));
+    prismicApi(endpoint).then((api) => this.setState({api: api}));
   }
   render() {
     if (!this.state.api) {
@@ -76,9 +44,14 @@ class Home extends React.Component {
     }
     return (<DocumentListContainer
                 api={this.state.api}
+                endpoint={endpoint}
                 linkResolver={linkResolver}
             />);
   }
+}
+
+function DocWrapper(props) {
+  return <Doc params={props.params} endpoint={endpoint} linkResolver={linkResolver} />;
 }
 
 function NoMatch(props) {
@@ -89,7 +62,7 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
-      <Route path=":type/:id" component={Doc}/>
+      <Route path=":type/:id" component={DocWrapper}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
