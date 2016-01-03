@@ -3,29 +3,23 @@
 import React from 'react';
 import { Prismic } from 'prismic.io';
 import { prismicApi, prismicQuery } from './prismic-es6';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
-const { PureRenderMixin } = React;
 const { Predicates } = Prismic;
 
-export default React.createClass({
+class Doc extends React.Component {
 
-  mixins: [PureRenderMixin],
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
-  propTypes: {
-    params: React.PropTypes.object.isRequired,
-    linkResolver: React.PropTypes.func.isRequired,
-    endpoint: React.PropTypes.string.isRequired,
-    accesstoken: React.PropTypes.string
-  },
-
-  getInitialState: function() {
-    return {
+  constructor(props) {
+    super(props);
+    this.state = {
       notFound: false,
       doc: null
     };
-  },
+  }
 
-  componentDidMount: function() {
+  componentDidMount() {
     prismicApi(this.props.endpoint, this.props.accessToken).then(api => {
       return prismicQuery(api, Predicates.at('document.id', this.props.params.id));
     }).then(res => {
@@ -35,9 +29,9 @@ export default React.createClass({
         this.setState({notFound: true});
       }
     });
-  },
+  }
 
-  render: function() {
+  render() {
     if (this.state.notFound) {
       return (<div>Document not found</div>);
     } else if (!this.state.doc) {
@@ -49,4 +43,14 @@ export default React.createClass({
     }
   }
 
-});
+}
+
+Doc.propTypes = {
+  params: React.PropTypes.object.isRequired,
+  linkResolver: React.PropTypes.func.isRequired,
+  endpoint: React.PropTypes.string.isRequired,
+  accesstoken: React.PropTypes.string
+};
+
+export default Doc;
+

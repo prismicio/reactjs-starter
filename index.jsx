@@ -8,7 +8,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
 import { prismicApi } from './prismic-es6';
-import { DocumentListContainer } from './DocumentList';
+import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
 // Update these 2 constants to point to your repository
