@@ -4,7 +4,7 @@
   "description": "React Webpack Babel Starter Kit",
   "main": "''",
   "scripts": {
-    "build": "webpack --progress --profile --colors",
+    "build": "webpack -p",
     "dev": "webpack-dev-server --progress --profile --colors --hot"
   },
   "keywords": [
@@ -15,12 +15,6 @@
     "template"
   ],
   "dependencies": {
-    "babel-plugin-transform-strict-mode": "^6.3.13",
-    "babel-polyfill": "^6.3.14",
-    "babel-preset-stage-0": "^6.3.13",
-    "bootstrap": "3.3.5",
-    "immutable": "^3.7.6",
-    "jquery": "^2.1.4",
     "node-libs-browser": "0.5.3",
     "prismic.io": "1.3.4",
     "react": "0.14.5",
@@ -31,8 +25,11 @@
   "devDependencies": {
     "babel-core": "6.3.26",
     "babel-loader": "6.2.0",
+    "babel-plugin-transform-strict-mode": "^6.3.13",
     "babel-preset-es2015": "6.3.13",
     "babel-preset-react": "6.3.13",
+    "babel-preset-stage-0": "^6.3.13",
+    "babel-polyfill": "^6.3.14",
     "css-loader": "0.23.1",
     "file-loader": "0.8.4",
     "json-loader": "^0.5.4",

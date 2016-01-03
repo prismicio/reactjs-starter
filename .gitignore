@@ -22,6 +22,10 @@ coverage
 # ternjs
 .tern-port
 
+# Compiled JS & sourcemap
+public/bundle.js
+public/bundle.js.map
+
 # Compiled binary addons (http://nodejs.org/api/addons.html)
 build/Release
 

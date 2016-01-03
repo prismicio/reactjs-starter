@@ -9,6 +9,13 @@ class Doc extends React.Component {
 
   shouldComponentUpdate = shouldPureComponentUpdate;
 
+  static propTypes = {
+    params: React.PropTypes.object.isRequired,
+    linkResolver: React.PropTypes.func.isRequired,
+    endpoint: React.PropTypes.string.isRequired,
+    accesstoken: React.PropTypes.string
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -42,13 +49,6 @@ class Doc extends React.Component {
   }
 
 }
-
-Doc.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  linkResolver: React.PropTypes.func.isRequired,
-  endpoint: React.PropTypes.string.isRequired,
-  accesstoken: React.PropTypes.string
-};
 
 export default Doc;
 
