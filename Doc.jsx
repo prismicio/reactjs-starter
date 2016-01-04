@@ -1,6 +1,6 @@
 import React from 'react';
 import { Prismic } from 'prismic.io';
-import { prismicApi, prismicQuery } from './prismic-es6';
+import { prismicApi, prismicByID } from './prismic-es6';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
 const { Predicates } = Prismic;
@@ -26,7 +26,7 @@ class Doc extends React.Component {
 
   componentDidMount() {
     prismicApi(this.props.endpoint, this.props.accessToken).then(api => {
-      return prismicQuery(api, Predicates.at('document.id', this.props.params.id));
+      return prismicByID(api, this.props.params.id);
     }).then(res => {
       if (res.results.length > 0) {
         this.setState({doc: res.results[0]});
