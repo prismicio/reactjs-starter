@@ -1,15 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { Prismic } from 'prismic.io';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import PureComponent from 'react-pure-render/component';
 
 const DocumentList = (props) => (
   <ul>
-    {props.docs.map((doc, i) => {
-       return (<li key={doc.id}>
-         <Link to={props.linkResolver(doc)}>{doc.slug}</Link>
-       </li>);
-     })}
+    {props.docs.map((doc) => {
+      return (<li key={doc.id}>
+      <Link to={props.linkResolver(doc)}>{doc.slug}</Link>
+      </li>);
+    })}
   </ul>
 );
 DocumentList.propTypes = {
@@ -17,17 +17,7 @@ DocumentList.propTypes = {
   linkResolver: React.PropTypes.func.isRequired
 };
 
-class DocumentListContainer extends React.Component {
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
-
-  static propTypes = {
-    api: React.PropTypes.instanceOf(Prismic.Api),
-    endpoint: React.PropTypes.string.isRequired,
-    accesstoken: React.PropTypes.string,
-    linkResolver: React.PropTypes.func.isRequired,
-    q: React.PropTypes.string // Prismic query
-  };
+class DocumentListContainer extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -35,7 +25,7 @@ class DocumentListContainer extends React.Component {
   }
 
   componentDidMount() {
-    this.props.api.form("everything").ref(this.props.api.master()).submit((err, res) => {
+    this.props.api.form('everything').ref(this.props.api.master()).submit((err, res) => {
       this.setState({docs: res.results});
     });
   }
@@ -45,6 +35,14 @@ class DocumentListContainer extends React.Component {
   }
 
 }
+
+DocumentListContainer.propTypes = {
+  api: React.PropTypes.instanceOf(Prismic.Api),
+  endpoint: React.PropTypes.string.isRequired,
+  accesstoken: React.PropTypes.string,
+  linkResolver: React.PropTypes.func.isRequired,
+  q: React.PropTypes.string // Prismic query
+};
 
 export default DocumentListContainer;
 

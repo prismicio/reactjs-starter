@@ -28,7 +28,7 @@ export const prismicQuery = (api, query, options) => {
 };
 
 export const prismicByID = (api, id, options) =>
-  prismicQuery(api, Predicates.at('document.id', id), options)
+  prismicQuery(api, Predicates.at('document.id', id), options);
 
 export const prismicByUID = (api, type, uid, options) =>
-  prismicQuery(api, Predicates.at('my.'+type+'.uid', uid), options)
+  prismicQuery(api, Predicates.at('my.'+type+'.uid', uid), options);

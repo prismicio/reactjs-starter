@@ -1,20 +1,9 @@
 import React from 'react';
 import { Prismic } from 'prismic.io';
 import { prismicApi, prismicByID } from './prismic-es6';
-import shouldPureComponentUpdate from 'react-pure-render/function';
+import PureComponent from 'react-pure-render/component';
 
-const { Predicates } = Prismic;
-
-class Doc extends React.Component {
-
-  shouldComponentUpdate = shouldPureComponentUpdate;
-
-  static propTypes = {
-    params: React.PropTypes.object.isRequired,
-    linkResolver: React.PropTypes.func.isRequired,
-    endpoint: React.PropTypes.string.isRequired,
-    accesstoken: React.PropTypes.string
-  };
+class Doc extends PureComponent {
 
   constructor(props) {
     super(props);
@@ -49,6 +38,13 @@ class Doc extends React.Component {
   }
 
 }
+
+Doc.propTypes = {
+  params: React.PropTypes.object.isRequired,
+  linkResolver: React.PropTypes.func.isRequired,
+  endpoint: React.PropTypes.string.isRequired,
+  accesstoken: React.PropTypes.string
+};
 
 export default Doc;
 
