@@ -1,14 +1,14 @@
-import "babel-polyfill";
+import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, Link, browserHistory } from 'react-router';
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { prismicApi } from './prismic-es6';
 import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
 // Update these 2 constants to point to your repository
-const endpoint = "https://blogtemplate.prismic.io/api";
+const endpoint = 'https://blogtemplate.prismic.io/api';
 const accessToken = null;
 
 // Also change the linkResolver if you change the URL scheme in the Router below
@@ -17,14 +17,14 @@ function linkResolver(doc) {
 }
 
 export class App extends React.Component {
-	render() {
-		return (
+  render() {
+    return (
       <div>
         <h1>Prismic.io + ReactJS</h1>
         {this.props.children}
       </div>
 		);
-	}
+  }
 }
 
 class Home extends React.Component {
@@ -64,5 +64,4 @@ ReactDOM.render((
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
-), document.querySelector("#myApp"));
-
+), document.querySelector('#myApp'));

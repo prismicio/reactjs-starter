@@ -1,5 +1,4 @@
 import React from 'react';
-import { Prismic } from 'prismic.io';
 import { prismicApi, prismicByID } from './prismic-es6';
 import PureComponent from 'react-pure-render/component';
 

@@ -1,8 +1,10 @@
+/*eslint-env node */
 module.exports = {
   'rules': {
-    'indent': [2, 2],
-    'quotes': [2, 'single'],
+    'indent': [1, 2],
+    'quotes': [1, 'single'],
     'linebreak-style': [2, 'unix'],
+    'no-unused-vars': [2, {'args': 'none'}],
     'semi': [2, 'always']
   },
   'env': {
