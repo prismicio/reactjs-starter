@@ -11,12 +11,14 @@ module.exports = {
     'es6': true,
     'browser': true
   },
-  'extends': 'eslint:recommended',
-  'ecmaFeatures': {
-    'jsx': true,
-    'modules': true,
-    'experimentalObjectRestSpread': true
+  'parserOptions': {
+    'ecmaVersion': 6,
+    'sourceType': 'module',
+    'ecmaFeatures': {
+      'jsx': true
+    }
   },
+  'extends': 'eslint:recommended',
   'plugins': [
     'react'
   ]

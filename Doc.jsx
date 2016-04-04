@@ -1,5 +1,5 @@
 import React from 'react';
-import { prismicApi, prismicByID } from './prismic-es6';
+import { Prismic } from 'prismic.io';
 import PureComponent from 'react-pure-render/component';
 
 class Doc extends PureComponent {
@@ -13,14 +13,14 @@ class Doc extends PureComponent {
   }
 
   componentDidMount() {
-    prismicApi(this.props.endpoint, this.props.accessToken).then(api => {
-      return prismicByID(api, this.props.params.id);
-    }).then(res => {
-      if (res.results.length > 0) {
-        this.setState({doc: res.results[0]});
-      } else {
-        this.setState({notFound: true});
-      }
+    Prismic.api(this.props.endpoint, this.props.accessToken).then(api => {
+      return api.getByID(this.props.params.id, {}, ((err, doc) => {
+        if (doc) {
+          this.setState({doc: doc});
+        } else {
+          this.setState({notFound: true});
+        }
+      }));
     });
   }
 

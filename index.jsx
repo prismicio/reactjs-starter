@@ -3,7 +3,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { prismicApi } from './prismic-es6';
+import { Prismic } from 'prismic.io';
 import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
@@ -33,7 +33,7 @@ class Home extends React.Component {
     this.state = { api: null };
   }
   componentDidMount() {
-    prismicApi(endpoint).then((api) => this.setState({api: api}));
+    Prismic.api(endpoint).then((api) => this.setState({api: api}));
   }
   render() {
     if (!this.state.api) {
