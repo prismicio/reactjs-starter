@@ -25,7 +25,7 @@
     "eslint-plugin-react": "^4.2.3",
     "file-loader": "^0.8.5",
     "node-libs-browser": "^1.0.0",
-    "prismic.io": "2.1.3",
+    "prismic.io": "3.1.3",
     "react": "^0.14.8",
     "react-dom": "^0.14.8",
     "react-hot-loader": "^1.3.0",
