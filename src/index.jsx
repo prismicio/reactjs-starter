@@ -3,7 +3,8 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
-import { Prismic } from 'prismic.io';
+import Prismic from 'prismic.io';
+import PrismicToolbar from 'prismic-toolbar';
 import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
@@ -52,6 +53,32 @@ function DocWrapper(props) {
   return <Doc params={props.params} endpoint={endpoint} accesstoken={accessToken} linkResolver={linkResolver} />;
 }
 
+const PREVIEW_EXPIRES: number = 30*60*1000; // 30 minutes
+
+class Preview extends React.Component {
+  setRef(token) {
+    document.cookie = `${Prismic.previewCookie}=${token}; expires=${PREVIEW_EXPIRES}`;
+  }
+  componentDidMount() {
+    const token = this.props.location.query['token'];
+    Prismic.api(endpoint).then((api) =>
+      api.previewSession(token, linkResolver, '/')
+    ).then((url: string) => {
+      this.setRef(token);
+      PrismicToolbar.toolbar();
+      browserHistory.push(url)
+      return url;
+    });
+  }
+  render() {
+    return (<p>Loading previews...</p>);
+  }
+}
+
+Preview.contextTypes = {
+  router: React.PropTypes.object
+};
+
 function NoMatch(props) {
   return <div>Not found</div>;
 }
@@ -61,6 +88,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <IndexRoute component={Home} />
       <Route path=":type/:id" component={DocWrapper}/>
+      <Route path="/preview" component={Preview}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
