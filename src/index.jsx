@@ -1,4 +1,5 @@
 import 'babel-polyfill';
+import 'whatwg-fetch';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -9,8 +10,13 @@ import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://your-repo-name.prismic.io/api';
+const endpoint = 'http://tototo.wroom.dev/api';
 const accessToken = null;
+
+//validate onboarding
+const repoEndpoint = endpoint.replace("/api", "");
+fetch(repoEndpoint + '/app/settings/onboarding/run', {credentials: 'include', method: 'POST'});
+
 
 // Also change the linkResolver if you change the URL scheme in the Router below
 function linkResolver(doc) {
