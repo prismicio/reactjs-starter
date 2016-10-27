@@ -10,7 +10,7 @@ import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'http://tototo.wroom.dev/api';
+const endpoint = 'https://your-repo-name.prismic.io/api';
 const accessToken = null;
 
 //validate onboarding
