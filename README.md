@@ -14,13 +14,13 @@ Install npm dependencies using this command:
 > $ npm install
 ```
 
-You can simply run webpack build using this command:
+You can run webpack build using this command:
 
 ```
 > $ npm run build
 ```
 
-If you want to run with webpack-dev-server simply run this command:
+If you want to run with webpack-dev-server run this command:
 
 ```
 > $ npm run dev
