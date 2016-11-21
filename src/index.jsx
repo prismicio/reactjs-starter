@@ -11,7 +11,7 @@ import Doc from './Doc';
 import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://levi-sample-blog-test.prismic.io/api';
+const endpoint = 'https://your-repo-name.prismic.io/api';
 const accessToken = null;
 
 //validate onboarding
