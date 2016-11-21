@@ -8,9 +8,10 @@ import Prismic from 'prismic.io';
 import PrismicToolbar from 'prismic-toolbar';
 import DocumentListContainer from './DocumentList';
 import Doc from './Doc';
+import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://your-repo-name.prismic.io/api';
+const endpoint = 'https://levi-sample-blog-test.prismic.io/api';
 const accessToken = null;
 
 //validate onboarding
@@ -95,6 +96,7 @@ ReactDOM.render((
       <IndexRoute component={Home} />
       <Route path=":type/:id" component={DocWrapper}/>
       <Route path="/preview" component={Preview}/>
+      <Route path="/help" component={Help}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
