@@ -4,8 +4,9 @@
   "description": "React Webpack Babel Starter Kit",
   "main": "''",
   "scripts": {
+    "start": "npm run server",
     "build": "webpack -p",
-    "dev": "webpack-dev-server --progress --profile --colors --hot",
+    "server": "webpack-dev-server --progress --profile --colors --hot",
     "lint": "eslint *.js *.jsx"
   },
   "keywords": [
