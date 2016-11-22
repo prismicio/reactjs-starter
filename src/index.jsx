@@ -11,12 +11,13 @@ import Doc from './Doc';
 import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://your-repo-name.prismic.io/api';
+const endpoint = 'https://poodlejs.prismic.io/api';
 const accessToken = null;
 
 //validate onboarding
 const repoEndpoint = endpoint.replace("/api", "");
-fetch(repoEndpoint + '/app/settings/onboarding/run', {credentials: 'include', method: 'POST'});
+fetch(repoEndpoint + '/app/settings/onboarding/run', {credentials: 'include', method: 'POST'})
+.catch(e => console.log("Cannot access your repository, check your api endpoint"));
 
 
 // Also change the linkResolver if you change the URL scheme in the Router below
@@ -40,7 +41,7 @@ class Home extends React.Component {
     this.state = { api: null };
   }
   componentDidMount() {
-    Prismic.api(endpoint).then((api) => this.setState({api: api}));
+    Prismic.api(endpoint).then((api) => this.setState({api}));
   }
   render() {
     if (!this.state.api) {
@@ -60,13 +61,14 @@ function DocWrapper(props) {
 }
 
 function HelpWrapper(props) {
-  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.prismic\\.io)\/api$');
+  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
   const match = endpoint.match(repoRegexp);
   const repoURL = match[1];
   const name = match[2];
   const host = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
   var isConfigured = false;
-  if ( endpoint !== 'https://your-repo-name.prismic.io/api' ) {
+  console.log(name)
+  if ( name !== 'your-repo-name' ) {
     isConfigured = true;
   }
   return <Help isConfigured={isConfigured} repoURL={repoURL} name={name} host={host} />;
@@ -80,9 +82,9 @@ class Preview extends React.Component {
   }
   componentDidMount() {
     const token = this.props.location.query['token'];
-    Prismic.api(endpoint).then((api) =>
+    Prismic.api(endpoint, {accessToken}).then((api) =>
       api.previewSession(token, linkResolver, '/')
-    ).then((url: string) => {
+    ).then((url) => {
       this.setRef(token);
       PrismicToolbar.toolbar();
       browserHistory.push(url)
