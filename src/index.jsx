@@ -3,7 +3,7 @@ import 'whatwg-fetch';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import Prismic from 'prismic.io';
 import PrismicToolbar from 'prismic-toolbar';
 import DocumentListContainer from './DocumentList';
@@ -28,7 +28,6 @@ export class App extends React.Component {
   render() {
     return (
       <div>
-        <h1>Prismic.io + ReactJS</h1>
         {this.props.children}
       </div>
 		);
@@ -106,7 +105,7 @@ function NoMatch(props) {
 ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRedirect to="/help" />
       <Route path=":type/:id" component={DocWrapper}/>
       <Route path="/preview" component={Preview}/>
       <Route path="/help" component={HelpWrapper}/>
