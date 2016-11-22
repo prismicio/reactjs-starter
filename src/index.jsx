@@ -11,7 +11,7 @@ import Doc from './Doc';
 import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://poodlejs.prismic.io/api';
+const endpoint = 'https://your-repo-name.prismic.io/api';
 const accessToken = null;
 
 //validate onboarding
@@ -65,7 +65,7 @@ function HelpWrapper(props) {
   const match = endpoint.match(repoRegexp);
   const repoURL = match[1];
   const name = match[2];
-  const host = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
+  const host = window.location.host + "/" + window.location.pathname.split('/')[1];
   var isConfigured = false;
   console.log(name)
   if ( name !== 'your-repo-name' ) {
