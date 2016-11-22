@@ -65,7 +65,7 @@ function HelpWrapper(props) {
   const match = endpoint.match(repoRegexp);
   const repoURL = match[1];
   const name = match[2];
-  const host = window.location.href;
+  const host = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname.split('/')[1];
   var isConfigured = false;
   if ( endpoint !== 'https://your-repo-name.prismic.io/api' ) {
     isConfigured = true;

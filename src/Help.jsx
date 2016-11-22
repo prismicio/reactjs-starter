@@ -8,8 +8,6 @@ class Help extends React.Component {
     super(props);
   }
 
-
-
   render() {
     if (this.props.isConfigured == true) {
       var repoNav = (<a href={this.props.repoURL} target="_blank"><strong>Go to {this.props.name}</strong></a>)
@@ -92,7 +90,6 @@ Prismic.api(this.props.endpoint, this.props.accessToken).then(api => {
           <p>Now all that's left to be done is insert your content into the template.<br/>You can get the content using the document we queried above. Let's define it as a constant pageContent. Each content field is accessed using the custom type API-ID and the field key defined in the custom type (for example 'page.image').</p>
           <div className="source-code">
             <pre><code>{`
-// In your Page class
 render() {
       if (this.state.notFound) {
             return (<div>Document not found</div>);
