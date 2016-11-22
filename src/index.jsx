@@ -60,6 +60,19 @@ function DocWrapper(props) {
   return <Doc params={props.params} endpoint={endpoint} accesstoken={accessToken} linkResolver={linkResolver} />;
 }
 
+function HelpWrapper(props) {
+  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.prismic\\.io)\/api$');
+  const match = endpoint.match(repoRegexp);
+  const repoURL = match[1];
+  const name = match[2];
+  const host = window.location.href;
+  var isConfigured = false;
+  if ( endpoint !== 'https://your-repo-name.prismic.io/api' ) {
+    isConfigured = true;
+  }
+  return <Help isConfigured={isConfigured} repoURL={repoURL} name={name} host={host} />;
+}
+
 const PREVIEW_EXPIRES: number = 30*60*1000; // 30 minutes
 
 class Preview extends React.Component {
@@ -96,7 +109,7 @@ ReactDOM.render((
       <IndexRoute component={Home} />
       <Route path=":type/:id" component={DocWrapper}/>
       <Route path="/preview" component={Preview}/>
-      <Route path="/help" component={Help}/>
+      <Route path="/help" component={HelpWrapper}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>

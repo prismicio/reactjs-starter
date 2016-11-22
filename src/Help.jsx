@@ -3,8 +3,37 @@ import { Prismic } from 'prismic.io';
 //import PureComponent from 'react-pure-render/component';
 
 class Help extends React.Component {
+  
+  constructor(props) {
+    super(props);
+  }
+
+
 
   render() {
+    if (this.props.isConfigured == true) {
+      var repoNav = (<a href={this.props.repoURL} target="_blank"><strong>Go to {this.props.name}</strong></a>)
+      var stepsLeft = "Two"
+      var bootstrap
+    } else {
+      var repoNav = (<a href="#config"><strong>Configure a repository</strong></a>)
+      var stepsLeft = "Three"
+      var bootstrap = (
+        <div>
+          <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
+          <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
+          <h4>Add the repository URL to your configuration</h4>
+          <p>Replace the repository url in your index.jsx file with your-repo-name.prismic.io</p>
+          <div className="source-code">
+            <pre><code>{`
+  // In index.jsx
+  const endpoint = 'https://your-repo-name.prismic.io/api';
+            `}</code></pre>
+          </div>
+        </div>
+      )
+    }
+    
     return (
       
       <div id="prismic-help">
@@ -14,7 +43,9 @@ class Help extends React.Component {
         <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,900" rel="stylesheet" type="text/css"/>
         
         <header>
-          <nav><a href="#config"><strong>Configure a repository</strong></a><a href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt=""/></a>
+          <nav>
+            {repoNav}
+            <a href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt=""/></a>
           </nav>
           <div className="wrapper"><img src="images/rocket.svg" alt=""/>
             <h1>High five, you deserve it!</h1>
@@ -35,18 +66,9 @@ class Help extends React.Component {
           </div>
         </header>
         <section>
-          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to /help.</p>
-          <h2>Three more steps:</h2>
-          <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
-          <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
-          <h4>Add the repository URL to your configuration</h4>
-          <p>Replace the repository url in your index.jsx file with your-repo-name.prismic.io</p>
-          <div className="source-code">
-            <pre><code>{`
-// In index.jsx
-const endpoint = 'https://your-repo-name.prismic.io/api';
-            `}</code></pre>
-          </div>
+          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.props.host}</p>
+          <h2>{stepsLeft} more steps:</h2>
+          {bootstrap}
           <h3 id="query"><span className="number">2</span>Create a route and retrieve content</h3>
           <p>To add a page to your project, you need to first specify a route. In the following example we set a "/page/:uid" URL to render the custom type "page" by its UID. Then create a "Page" class where you query the page content.</p>
           <div className="source-code">
@@ -98,9 +120,10 @@ render() {
 
 Help.propTypes = {
   params: React.PropTypes.object.isRequired,
-  linkResolver: React.PropTypes.func.isRequired,
-  endpoint: React.PropTypes.string.isRequired,
-  accesstoken: React.PropTypes.string
+  isConfigured: React.PropTypes.bool.isRequired,
+  repoURL: React.PropTypes.string.isRequired,
+  name: React.PropTypes.string.isRequired,
+  host: React.PropTypes.string.isRequired,
 };
 
 export default Help;
