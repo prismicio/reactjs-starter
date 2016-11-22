@@ -67,7 +67,6 @@ function HelpWrapper(props) {
   const name = match[2];
   const host = window.location.host + "/" + window.location.pathname.split('/')[1];
   var isConfigured = false;
-  console.log(name)
   if ( name !== 'your-repo-name' ) {
     isConfigured = true;
   }

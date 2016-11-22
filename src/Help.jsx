@@ -73,30 +73,45 @@ const endpoint = 'https://your-repo-name.prismic.io/api';
 
         <h4>You need to publish your content first !</h4>
         <p>
-          To add a page to your project, you need to first specify a route. The route contains the URL and performs queries for the needed content.
+          To add a page to your project, you need to first specify a route. The route contains the URL will allow you to link a React component.
           <br />
-          In the following example we set a <code className="tag">/page/:uid</code> URL to fetch content of your custom type by its UID. The route then calls the <code className="tag">page</code> template and passes it the retrieved content.
+          In the following example we'll link a <code className="tag">/page/:uid</code> URL to a new <code className="tag">Page</code> component.
         </p>
           <div className="source-code">
           <pre><code>{`
+// import your Page Component
+import Page from './page.jsx';
+
 // In ./src/index.jsx add the following route:
 <Route path="/page/:uid" component={Page}/>
+          `}</code></pre>
+        </div>
+        <p>
+          Now you need to create the Page component and fetch your content.
+          We will do so as soon as the component is mounted, retrieve the content of your custom type by its UID and update your component state.
+        </p>
+          <div className="source-code">
+          <pre><code>{`
+// create a new Page.jsx
 
-//You must put this code in the componentDidMount method
-// to retrieve content as soon as the component is mounted
-componentDidMount() {
-    // We are using the function to get a document by its uid
-    Prismic.api(this.props.endpoint, this.props.accessToken).then(api => {
-          return api.getByUID("page", this.props.params.uid, {}, ((err, doc) => {
-                if (doc) {
-                      //we put the retrieved content in the state as a doc variable
-                      this.setState({doc: doc});
-                } else {
-                      //we changed the state to display error not found if no matched doc
-                      this.setState({notFound: true});
-                }
-          }));
-    });
+// declare your component
+class Page extends React.Component {
+
+    // React's lifecycle method triggered when the component is mounted
+    componentDidMount() {
+        // We are using the function to get a document by its uid
+        Prismic.api(this.props.endpoint, this.props.accessToken).then(api => {
+              return api.getByUID("page", this.props.params.uid, {}, ((err, doc) => {
+                    if (doc) {
+                          //we put the retrieved content in the state as a doc variable
+                          this.setState({doc: doc});
+                    } else {
+                          //we changed the state to display error not found if no matched doc
+                          this.setState({notFound: true});
+                    }
+              }));
+        });
+    }
 }
           `}</code></pre>
         </div>
