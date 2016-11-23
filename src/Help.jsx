@@ -90,25 +90,7 @@ const endpoint = 'https://your-repo-name.prismic.io/api';
 
         <h4>You need to publish your content first!</h4>
         <p>
-          To add a page to your project, you need to first specify a route. The route contains the URL that will allow you to link a React component.
-          <br />
-          In the following example we'll link a <code className="tag">/page/:uid</code> URL to a new <code className="tag">Page</code> component.
-          <br />
-          The <code className="tag">withPrismic</code> attribute provides you with an easy way to set the prismic context as React props in your components.
-        </p>
-          <div className="source-code">
-          <pre><code>{`
-// In ./src/index.jsx
-
-// import your Page Component
-import Page from './page.jsx';
-
-// In ./src/index.jsx add the following route:
-<Route path="/page/:uid" component={Page} withPrismic={true} />
-          `}</code></pre>
-        </div>
-        <p>
-          Now you need to create the Page component and fetch your content.
+          You need to create the Page component and fetch your content.
           We will query the page by its UID right before the component is mounted and update your component state.
         </p>
           <div className="source-code">
@@ -133,7 +115,7 @@ export default class Page extends React.Component {
     componentWillMount() {
         // We are using the function to get a document by its uid
         Prismic.api(this.props.ctx.endpoint, this.props.ctx.accessToken).then(api => {
-              return api.getByUID("page", this.props.params.uid, {}, ((err, doc) => {
+              return api.getByUID("<your-custom-type-id>", this.props.params.uid, {}, ((err, doc) => {
                     if (doc) {
                           //we put the retrieved content in the state as a doc variable
                           this.setState({doc: doc});
@@ -150,6 +132,24 @@ export default class Page extends React.Component {
         <p>
           To discover all the functions you can use to query your documents go to <a href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank">the prismic documentation</a>
         </p>
+        <p>
+          Now you need to link your component to a URL by defining a route.
+          <br />
+          In the following example we'll link a <code className="tag">/page/:uid</code> URL to the new <code className="tag">Page</code> component.
+          <br />
+          The <code className="tag">withPrismic</code> attribute provides you with an easy way to set the prismic context as React props in your components.
+        </p>
+          <div className="source-code">
+          <pre><code>{`
+// In ./src/index.jsx
+
+// import your Page Component
+import Page from './page.jsx';
+
+// Add the following route in your Router component before the catch all route (path="*")
+<Route path="/page/:uid" component={Page} withPrismic={true} />
+          `}</code></pre>
+        </div>
       </div>
     )
   }
