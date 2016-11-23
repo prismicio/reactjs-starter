@@ -93,14 +93,18 @@ const endpoint = 'https://your-repo-name.prismic.io/api';
           To add a page to your project, you need to first specify a route. The route contains the URL will allow you to link a React component.
           <br />
           In the following example we'll link a <code className="tag">/page/:uid</code> URL to a new <code className="tag">Page</code> component.
+          <br />
+          The <code className="tag">withPrismic</code> attribute provide you an easy way to set the prismic context as props in your components.
         </p>
           <div className="source-code">
           <pre><code>{`
+// In ./src/index.jsx
+
 // import your Page Component
 import Page from './page.jsx';
 
 // In ./src/index.jsx add the following route:
-<Route path="/page/:uid" component={Page}/>
+<Route path="/page/:uid" component={Page} withPrismic={true} />
           `}</code></pre>
         </div>
         <p>
