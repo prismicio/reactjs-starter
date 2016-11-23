@@ -10,7 +10,7 @@ class Help extends React.Component {
 
   componentWillMount() {
     const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
-    const match = this.props.ctx.endpoint.match(repoRegexp);
+    const match = this.props.endpoint.match(repoRegexp);
     const repoURL = match[1];
     const name = match[2];
     const host = window.location.host + "/" + window.location.pathname.split('/')[1];
@@ -111,8 +111,12 @@ import Page from './page.jsx';
           <pre><code>{`
 // create a new Page.jsx
 
+// import React dependencies
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 // declare your component
-class Page extends React.Component {
+export default class Page extends React.Component {
 
     // React's lifecycle method triggered when the component is mounted
     componentDidMount() {

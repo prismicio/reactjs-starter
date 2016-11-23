@@ -10,7 +10,7 @@ import PrismicToolbar from 'prismic-toolbar';
 import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'http://your-repo-name.wroom.dev/api';
+const endpoint = 'http://toto.wroom.dev/api';
 const accessToken = null;
 
 //validate onboarding
@@ -24,7 +24,7 @@ function linkResolver(doc) {
   return '/' + doc.type + '/' + doc.id;
 }
 
-function withPrismic() {
+function buildContext() {
   return Prismic.api(endpoint).then((api) => {
     return {api, endpoint, accessToken, linkResolver};
   });
@@ -37,25 +37,45 @@ export class App extends React.Component {
   }
 
   componentWillMount() {
-    withPrismic()
-    .then((ctx) => {
-      this.setState({ctx});
-    })
-    .catch((e) => {
-      console.error("Cannot contact the API, check your prismic configuration");
-    });
+    const destination = this.props.children.props.route;
+    this.setState({withPrismic: destination.withPrismic, customProps: destination.customProps})
+    if(destination.withPrismic) {
+      buildContext()
+      .then((ctx) => {
+        this.setState({ctx});
+      })
+      .catch((e) => {
+        console.error("Cannot contact the API, check your prismic configuration");
+      });
+    }
+  }
+
+  renderEmpty() {
+    return <div></div>
+  }
+
+  renderWithContext() {
+    let myProps = this.state.customProps;
+    myProps.ctx = this.state.ctx;
+    return (
+      <div>
+        {React.cloneElement(this.props.children, myProps)}
+      </div>
+    );
+  }
+
+  renderComponent() {
+    return (
+      <div>
+        {React.cloneElement(this.props.children, this.state.customProps)}
+      </div>
+    );
   }
 
   render() {
-    if(this.state.ctx) {
-      return (
-        <div>
-          {React.cloneElement(this.props.children, {ctx: this.state.ctx})}
-        </div>
-      );
-    } else {
-      return <div></div>
-    }
+    if(this.state.withPrismic && !this.state.ctx) return this.renderEmpty()
+    else if(this.state.withPrismic && this.state.ctx) return this.renderWithContext()
+    else return this.renderComponent()
   }
 }
 
@@ -92,7 +112,7 @@ ReactDOM.render((
     <Route path="/" component={App}>
       <IndexRedirect to="/help" />
       <Route path="/preview" component={Preview}/>
-      <Route path="/help" component={Help}/>
+      <Route path="/help" component={Help} customProps={{endpoint: endpoint}} />
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>
