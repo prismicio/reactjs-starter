@@ -175,11 +175,11 @@ render() {
         return (
             <div>
                 {/* This is how to get an image into your template */}
-                <img class="star" src={this.state.doc.getImage("<your-custom-type-id>.<your-field-text-id>").url}/>
+                <img src={this.state.doc.getImage("<your-custom-type-id>.<your-field-text-id>").url}/>
                 {/* This is how to get a text into your template */}
                 <h1>{this.state.doc.getText("<your-custom-type-id>.<your-field-text-id>")}</h1>
                 {/* This is how to get a structured text into your template */}
-                <p dangerouslySetInnerHTML={{ __html: this.state.doc.getStructuredText("'<your-custom-type-id>.<your-field-text-id>'").asHtml() }} />
+                <div dangerouslySetInnerHTML={{ __html: this.state.doc.getStructuredText("<your-custom-type-id>.<your-field-text-id>").asHtml() }} />
             </div>
         );
     }
