@@ -71,11 +71,11 @@ export default class Help extends React.Component {
           <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
           <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
           <h4>Add the repository URL to your configuration</h4>
-          <p>Replace the repository url in your index.jsx file with your-repo-name.prismic.io</p>
+          <p>Replace the repository url in your prismic configuration with your-repo-name.prismic.io</p>
           <div className="source-code">
           <pre><code>{`
-// In ./src/index.jsx
-const endpoint = 'https://your-repo-name.prismic.io/api';
+// In ./prismic-configuration.js
+apiEndpoint: "https://your-repo-name.prismic.io/api",
           `}</code></pre>
           </div>
         </div>
