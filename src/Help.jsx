@@ -88,13 +88,13 @@ const endpoint = 'https://your-repo-name.prismic.io/api';
       <div>
         <h3 id="query"><span className="number">2</span>Create a route and retrieve content</h3>
 
-        <h4>You need to publish your content first !</h4>
+        <h4>You need to publish your content first!</h4>
         <p>
-          To add a page to your project, you need to first specify a route. The route contains the URL will allow you to link a React component.
+          To add a page to your project, you need to first specify a route. The route contains the URL that will allow you to link a React component.
           <br />
           In the following example we'll link a <code className="tag">/page/:uid</code> URL to a new <code className="tag">Page</code> component.
           <br />
-          The <code className="tag">withPrismic</code> attribute provide you an easy way to set the prismic context as props in your components.
+          The <code className="tag">withPrismic</code> attribute provides you with an easy way to set the prismic context as React props in your components.
         </p>
           <div className="source-code">
           <pre><code>{`
@@ -109,13 +109,13 @@ import Page from './page.jsx';
         </div>
         <p>
           Now you need to create the Page component and fetch your content.
-          We will do so as soon as the component is mounted, retrieve the content of your custom type by its UID and update your component state.
+          We will query the page by its UID right before the component is mounted and update your component state.
         </p>
           <div className="source-code">
           <pre><code>{`
 // create a new Page.jsx
 
-// import React dependencies
+// import dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Prismic from 'prismic.io';
@@ -129,8 +129,8 @@ export default class Page extends React.Component {
       this.state = {notFound: false, doc: null}
     }
 
-    // React's lifecycle method triggered when the component is mounted
-    componentDidMount() {
+    // React's lifecycle method triggered before the component is mounted
+    componentWillMount() {
         // We are using the function to get a document by its uid
         Prismic.api(this.props.ctx.endpoint, this.props.ctx.accessToken).then(api => {
               return api.getByUID("page", this.props.params.uid, {}, ((err, doc) => {
@@ -158,7 +158,7 @@ export default class Page extends React.Component {
     return (
       <div>
         <h3 id="done"><span className="number">3</span>Fill a template</h3>
-        <p>Now all that's left to be done is render your component with your content into..<br/>You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
+        <p>Now all that's left to be done is display your component using the <code className="tag">render</code> function.<br/>You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
         <div className="source-code">
           <pre><code>{`
 //define the render method in your React component
@@ -176,9 +176,9 @@ render() {
             <div>
                 {/* This is how to get an image into your template */}
                 <img src={this.state.doc.getImage("<your-custom-type-id>.<your-field-text-id>").url}/>
-                {/* This is how to get a text into your template */}
+                {/* This is how to get text into your template */}
                 <h1>{this.state.doc.getText("<your-custom-type-id>.<your-field-text-id>")}</h1>
-                {/* This is how to get a structured text into your template */}
+                {/* This is how to get structured text into your template */}
                 <div dangerouslySetInnerHTML={{ __html: this.state.doc.getStructuredText("<your-custom-type-id>.<your-field-text-id>").asHtml() }} />
             </div>
         );
@@ -187,7 +187,7 @@ render() {
           `}</code></pre>
         </div>
         <p>
-          To discover how to get all the field go to <a href="https://prismic.io/docs/fields/text#?lang=javascript" target="_blank">the prismic documentation</a>
+          To discover how to get all the fields go to <a href="https://prismic.io/docs/fields/text#?lang=javascript" target="_blank">the prismic documentation</a>
         </p>
       </div>
     )
