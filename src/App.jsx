@@ -27,7 +27,8 @@ export default class App extends React.Component {
   }
 
   buildContext() {
-    return Prismic.api(configuration.apiEndpoint).then((api) => {
+    const accessToken = configuration.accessToken
+    return Prismic.api(configuration.apiEndpoint, {accessToken}).then((api) => {
       return {api, endpoint: configuration.apiEndpoint, accessToken, linkResolver: configuration.linkResolver};
     });
   }
