@@ -2,7 +2,7 @@ import React from 'react';
 import { Prismic } from 'prismic.io';
 //import PureComponent from 'react-pure-render/component';
 
-class Help extends React.Component {
+export default class Help extends React.Component {
 
   constructor(props) {
     super(props);
@@ -209,5 +209,3 @@ render() {
   }
 
 }
-
-export default Help;
