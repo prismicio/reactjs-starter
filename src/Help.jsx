@@ -118,9 +118,16 @@ import Page from './page.jsx';
 // import React dependencies
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Prismic from 'prismic.io';
 
 // declare your component
 export default class Page extends React.Component {
+
+    // React's lifecycle method called first during instantiation
+    constructor(props) {
+      super(props);
+      this.state = {notFound: false, doc: null}
+    }
 
     // React's lifecycle method triggered when the component is mounted
     componentDidMount() {

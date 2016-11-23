@@ -55,7 +55,7 @@ export class App extends React.Component {
   }
 
   renderWithContext() {
-    let myProps = this.state.customProps;
+    let myProps = this.state.customProps || {};
     myProps.ctx = this.state.ctx;
     return (
       <div>
@@ -67,7 +67,7 @@ export class App extends React.Component {
   renderComponent() {
     return (
       <div>
-        {React.cloneElement(this.props.children, this.state.customProps)}
+        {React.cloneElement(this.props.children, this.state.customProps || {})}
       </div>
     );
   }
