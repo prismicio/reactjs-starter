@@ -3,15 +3,14 @@ import 'whatwg-fetch';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+
 import { Router, Route, IndexRedirect, browserHistory } from 'react-router';
 import Prismic from 'prismic.io';
 import PrismicToolbar from 'prismic-toolbar';
-import DocumentListContainer from './DocumentList';
-import Doc from './Doc';
 import Help from './Help';
 
 // Update these 2 constants to point to your repository
-const endpoint = 'https://your-repo-name.prismic.io/api';
+const endpoint = 'http://your-repo-name.wroom.dev/api';
 const accessToken = null;
 
 //validate onboarding
@@ -25,52 +24,39 @@ function linkResolver(doc) {
   return '/' + doc.type + '/' + doc.id;
 }
 
-export class App extends React.Component {
-  render() {
-    return (
-      <div>
-        {this.props.children}
-      </div>
-		);
-  }
+function withPrismic() {
+  return Prismic.api(endpoint).then((api) => {
+    return {api, endpoint, accessToken, linkResolver};
+  });
 }
 
-class Home extends React.Component {
+export class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { api: null };
+    this.state = { ctx: null };
   }
-  componentDidMount() {
-    Prismic.api(endpoint).then((api) => this.setState({api}));
+
+  componentWillMount() {
+    withPrismic()
+    .then((ctx) => {
+      this.setState({ctx});
+    })
+    .catch((e) => {
+      console.error("Cannot contact the API, check your prismic configuration");
+    });
   }
+
   render() {
-    if (!this.state.api) {
-      return (<div>Loading...</div>);
+    if(this.state.ctx) {
+      return (
+        <div>
+          {React.cloneElement(this.props.children, {ctx: this.state.ctx})}
+        </div>
+      );
+    } else {
+      return <div></div>
     }
-    return (<DocumentListContainer
-                api={this.state.api}
-                endpoint={endpoint}
-                accesstoken={accessToken}
-                linkResolver={linkResolver}
-            />);
   }
-}
-
-function DocWrapper(props) {
-  return <Doc params={props.params} endpoint={endpoint} accesstoken={accessToken} linkResolver={linkResolver} />;
-}
-
-function HelpWrapper(props) {
-  const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
-  const match = endpoint.match(repoRegexp);
-  const repoURL = match[1];
-  const name = match[2];
-  const host = window.location.host + "/" + window.location.pathname.split('/')[1];
-  var isConfigured = false;
-  if ( name !== 'your-repo-name' ) {
-    isConfigured = true;
-  }
-  return <Help isConfigured={isConfigured} repoURL={repoURL} name={name} host={host} />;
 }
 
 const PREVIEW_EXPIRES: number = 30*60*1000; // 30 minutes
@@ -79,16 +65,14 @@ class Preview extends React.Component {
   setRef(token) {
     document.cookie = `${Prismic.previewCookie}=${token}; expires=${PREVIEW_EXPIRES}`;
   }
+
   componentDidMount() {
     const token = this.props.location.query['token'];
-    Prismic.api(endpoint, {accessToken}).then((api) =>
-      api.previewSession(token, linkResolver, '/')
-    ).then((url) => {
-      this.setRef(token);
-      PrismicToolbar.toolbar();
-      browserHistory.push(url)
-      return url;
-    });
+    const url = this.props.ctx.api.previewSession(token, linkResolver, '/');
+    this.setRef(token);
+    PrismicToolbar.toolbar();
+    browserHistory.push(url);
+    return url;
   }
   render() {
     return (<p>Loading previews...</p>);
@@ -107,9 +91,8 @@ ReactDOM.render((
   <Router history={browserHistory}>
     <Route path="/" component={App}>
       <IndexRedirect to="/help" />
-      <Route path=":type/:id" component={DocWrapper}/>
       <Route path="/preview" component={Preview}/>
-      <Route path="/help" component={HelpWrapper}/>
+      <Route path="/help" component={Help}/>
       <Route path="*" component={NoMatch}/>
     </Route>
   </Router>

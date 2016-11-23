@@ -8,9 +8,26 @@ class Help extends React.Component {
     super(props);
   }
 
+  componentWillMount() {
+    const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
+    const match = this.props.ctx.endpoint.match(repoRegexp);
+    const repoURL = match[1];
+    const name = match[2];
+    const host = window.location.host + "/" + window.location.pathname.split('/')[1];
+    var isConfigured = false;
+    if ( name !== 'your-repo-name' ) {
+      isConfigured = true;
+    }
+    this.setState({name, host, repoURL, isConfigured});
+  }
+
+  componentDidMount() {
+    $(document).ready(function(){$('pre code').each(function(i, block){hljs.highlightBlock(block);});});
+  }
+
   renderNavbar() {
-    const repoLink = this.props.isConfigured
-      ? <a href={this.props.repoURL} target="_blank"><strong>Go to {this.props.name}</strong></a>
+    const repoLink = this.state.isConfigured
+      ? <a href={this.state.repoURL} target="_blank"><strong>Go to {this.state.name}</strong></a>
       : <a href="#config"><strong>Configure a repository</strong></a>
 
     return (
@@ -47,7 +64,7 @@ class Help extends React.Component {
   }
 
   renderBootstrapSection() {
-    if(this.props.isConfigured) return
+    if(this.state.isConfigured) return
     else {
       return (
         <div>
@@ -100,7 +117,7 @@ class Page extends React.Component {
     // React's lifecycle method triggered when the component is mounted
     componentDidMount() {
         // We are using the function to get a document by its uid
-        Prismic.api(this.props.endpoint, this.props.accessToken).then(api => {
+        Prismic.api(this.props.ctx.endpoint, this.props.ctx.accessToken).then(api => {
               return api.getByUID("page", this.props.params.uid, {}, ((err, doc) => {
                     if (doc) {
                           //we put the retrieved content in the state as a doc variable
@@ -166,8 +183,8 @@ render() {
       <div id="prismic-help">
         {this.renderHeader()}
         <section>
-          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.props.host}</p>
-          <h2>{this.props.isConfigured ? 'Two' : 'Three'} more steps:</h2>
+          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.state.host}</p>
+          <h2>{this.state.isConfigured ? 'Two' : 'Three'} more steps:</h2>
           {this.renderBootstrapSection()}
           {this.renderRouteSection()}
           {this.renderTemplateSection()}
@@ -177,13 +194,5 @@ render() {
   }
 
 }
-
-Help.propTypes = {
-  params: React.PropTypes.object.isRequired,
-  isConfigured: React.PropTypes.bool.isRequired,
-  repoURL: React.PropTypes.string.isRequired,
-  name: React.PropTypes.string.isRequired,
-  host: React.PropTypes.string.isRequired,
-};
 
 export default Help;
