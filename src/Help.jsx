@@ -1,89 +1,87 @@
 import React from 'react';
-import { Prismic } from 'prismic.io';
-//import PureComponent from 'react-pure-render/component';
 
 export default class Help extends React.Component {
-
-  constructor(props) {
-    super(props);
-  }
 
   componentWillMount() {
     const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
     const match = this.props.endpoint.match(repoRegexp);
     const repoURL = match[1];
     const name = match[2];
-    const host = window.location.host + "/" + window.location.pathname.split('/')[1];
-    var isConfigured = false;
-    if ( name !== 'your-repo-name' ) {
-      isConfigured = true;
-    }
-    this.setState({name, host, repoURL, isConfigured});
+    const host = `${window.location.host}/${window.location.pathname.split('/')[1]}`;
+    const isConfigured = name !== 'your-repo-name';
+    this.setState({ name, host, repoURL, isConfigured });
   }
 
   componentDidMount() {
-    $(document).ready(function(){$('pre code').each(function(i, block){hljs.highlightBlock(block);});});
+    $(document).ready(() => {
+      $('pre code').each((i, block) => {
+        hljs.highlightBlock(block);
+      });
+    });
   }
 
   renderNavbar() {
     const repoLink = this.state.isConfigured
-      ? <a href={this.state.repoURL} target="_blank"><strong>Go to {this.state.name}</strong></a>
-      : <a href="#config"><strong>Configure a repository</strong></a>
+      ? <a href={this.state.repoURL} target="_blank" rel="noopener noreferrer"><strong>Go to {this.state.name}</strong></a>
+      : <a href="#config"><strong>Configure a repository</strong></a>;
 
     return (
       <nav>
         {repoLink}
-        <a href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt=""/></a>
+        <a href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt="" /></a>
       </nav>
-    )
+    );
   }
 
   renderHeader() {
     return (
       <header>
         {this.renderNavbar()}
-        <div className="wrapper"><img src="images/rocket.svg" alt=""/>
+        <div className="wrapper">
+          <img src="images/rocket.svg" alt="" />
           <h1>High five, you deserve it!</h1>
-          <p>Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.</p>
+          <p>Grab a well deserved cup of coffee, {'you\'re'} two steps away from creating a page with dynamic content.</p>
         </div>
-        <div className="hero-curve"></div>
+        <div className="hero-curve" />
         <div className="flip-flap">
           <div className="flipper">
             <div className="guide">
               <ul>
                 <li className="done"><span className="number">1</span>Bootstrap your project</li>
-                <li><a href="#query"><span className="number">2</span>Create a route and retrieve content<img src="images/arrow.svg" alt=""/></a></li>
-                <li><a href="#done"><span className="number">3</span>Fill a template<img src="images/arrow.svg" alt=""/></a></li>
+                <li><a href="#query"><span className="number">2</span>Create a route and retrieve content<img src="images/arrow.svg" alt="" /></a></li>
+                <li><a href="#done"><span className="number">3</span>Fill a template<img src="images/arrow.svg" alt="" /></a></li>
               </ul>
             </div>
-            <div className="gif"></div>
+            <div className="gif" />
           </div>
         </div>
       </header>
-    )
+    );
   }
 
   renderBootstrapSection() {
-    if(this.state.isConfigured) return
-    else {
+    if (!this.state.isConfigured) {
       return (
         <div>
           <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
-          <p>If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!</p>
+          <p>
+            If you {'haven\'t'} yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+          </p>
           <h4>Add the repository URL to your configuration</h4>
           <p>Replace the repository url in your prismic configuration with your-repo-name.prismic.io</p>
           <div className="source-code">
-          <pre><code>{`
+            <pre><code>{`
 // In ./prismic-configuration.js
 apiEndpoint: "https://your-repo-name.prismic.io/api",
           `}</code></pre>
           </div>
         </div>
-      )
+      );
     }
+    return null;
   }
 
-  renderRouteSection() {
+  static renderRouteSection() {
     return (
       <div>
         <h3 id="query"><span className="number">2</span>Create a route and retrieve content</h3>
@@ -93,35 +91,34 @@ apiEndpoint: "https://your-repo-name.prismic.io/api",
           You need to create the Page component and fetch your content.
           We will query the page by its UID right before the component is mounted and update your component state.
         </p>
-          <div className="source-code">
+        <div className="source-code">
           <pre><code>{`
-// create a new Page.jsx
+// Create a new Page.jsx
 
-// import dependencies
+// Import dependencies
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Prismic from 'prismic.io';
 
-// declare your component
+// Declare your component
 export default class Page extends React.Component {
 
     // React's lifecycle method called first during instantiation
     constructor(props) {
       super(props);
-      this.state = {notFound: false, doc: null}
+      this.state = { notFound: false, doc: null };
     }
 
     // React's lifecycle method triggered before the component is mounted
     componentWillMount() {
         // We are using the function to get a document by its uid
-        Prismic.api(this.props.ctx.endpoint, this.props.ctx.accessToken).then(api => {
-              return api.getByUID("<your-custom-type-id>", this.props.params.uid, {}, ((err, doc) => {
+        Prismic.api(this.props.ctx.endpoint, this.props.ctx.accessToken).then((api) => {
+              return api.getByUID('<your-custom-type-id>', this.props.params.uid, {}, ((err, doc) => {
                     if (doc) {
-                          //we put the retrieved content in the state as a doc variable
-                          this.setState({doc: doc});
+                          // We put the retrieved content in the state as a doc variable
+                          this.setState({ doc: doc });
                     } else {
-                          //we changed the state to display error not found if no matched doc
-                          this.setState({notFound: true});
+                          // We changed the state to display error not found if no matched doc
+                          this.setState({ notFound: true });
                     }
               }));
         });
@@ -130,16 +127,16 @@ export default class Page extends React.Component {
           `}</code></pre>
         </div>
         <p>
-          To discover all the functions you can use to query your documents go to <a href="https://prismic.io/docs/custom-types#query?lang=javascript" target="_blank">the prismic documentation</a>
+          To discover all the functions you can use to query your documents go to <a href="https://prismic.io/docs/custom-types#query?lang=javascript" rel="noopener noreferrer" target="_blank">the prismic documentation</a>.
         </p>
         <p>
           Now you need to link your component to a URL by defining a route.
           <br />
-          In the following example we'll link a <code className="tag">/page/:uid</code> URL to the new <code className="tag">Page</code> component.
+          In the following example {'we\'ll'} link a <code className="tag">/page/:uid</code> URL to the new <code className="tag">Page</code> component.
           <br />
           The <code className="tag">withPrismic</code> attribute provides you with an easy way to set the prismic context as React props in your components.
         </p>
-          <div className="source-code">
+        <div className="source-code">
           <pre><code>{`
 // In ./src/index.jsx
 
@@ -147,18 +144,18 @@ export default class Page extends React.Component {
 import Page from './page.jsx';
 
 // Add the following route in your Router component before the catch all route (path="*")
-<Route path="/page/:uid" component={Page} withPrismic={true} />
+<Route path="/page/:uid" component={Page} withPrismic />
           `}</code></pre>
         </div>
       </div>
-    )
+    );
   }
 
-  renderTemplateSection() {
+  static renderTemplateSection() {
     return (
       <div>
         <h3 id="done"><span className="number">3</span>Fill a template</h3>
-        <p>Now all that's left to be done is display your component using the <code className="tag">render</code> function.<br/>You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
+        <p>Now all {'that\'s'} left to be done is display your component using the <code className="tag">render</code> function.<br />You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
         <div className="source-code">
           <pre><code>{`
 //define the render method in your React component
@@ -187,10 +184,10 @@ render() {
           `}</code></pre>
         </div>
         <p>
-          To discover how to get all the fields go to <a href="https://prismic.io/docs/fields/text#?lang=javascript" target="_blank">the prismic documentation</a>
+          To discover how to get all the fields go to <a href="https://prismic.io/docs/fields/text#?lang=javascript" rel="noopener noreferrer" target="_blank">the prismic documentation</a>.
         </p>
       </div>
-    )
+    );
   }
 
   render() {
@@ -198,14 +195,13 @@ render() {
       <div id="prismic-help">
         {this.renderHeader()}
         <section>
-          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.state.host}</p>
+          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.state.host}.</p>
           <h2>{this.state.isConfigured ? 'Two' : 'Three'} more steps:</h2>
           {this.renderBootstrapSection()}
-          {this.renderRouteSection()}
-          {this.renderTemplateSection()}
+          {Help.renderRouteSection()}
+          {Help.renderTemplateSection()}
         </section>
       </div>
     );
   }
-
 }

@@ -1,51 +1,51 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import Prismic from 'prismic.io';
-import configuration from '../prismic-configuration';
+import Config from '../prismic-configuration';
 
 export default class App extends React.Component {
+
+  static validateOnboarding() {
+    const repoEndpoint = Config.apiEndpoint.replace('/api', '');
+    fetch(`${repoEndpoint}/app/settings/onboarding/run`, { credentials: 'include', method: 'POST' })
+      .catch(() => console.log('Cannot access your repository, check your api endpoint'));
+  }
+
+  static buildContext() {
+    const accessToken = Config.accessToken;
+    return Prismic.api(Config.apiEndpoint, { accessToken }).then(api => ({
+      api,
+      endpoint: Config.apiEndpoint,
+      accessToken,
+      linkResolver: Config.linkResolver,
+    }));
+  }
+
   constructor(props) {
     super(props);
     this.state = { ctx: null };
   }
 
   componentWillMount() {
-    this.validateOnboarding()
+    App.validateOnboarding();
 
     const destination = this.props.children.props.route;
-    this.setState({withPrismic: destination.withPrismic, customProps: destination.customProps})
-    if(destination.withPrismic) {
-      this.buildContext()
-      .then((ctx) => {
-        this.setState({ctx});
-      })
-      .catch((e) => {
-        console.error("Cannot contact the API, check your prismic configuration");
+
+    this.setState({
+      withPrismic: destination.withPrismic,
+      customProps: destination.customProps,
+    });
+
+    if (destination.withPrismic) {
+      App.buildContext().then((ctx) => {
+        this.setState({ ctx });
+      }).catch(() => {
+        console.error('Cannot contact the API, check your prismic configuration');
       });
     }
   }
 
-  buildContext() {
-    const accessToken = configuration.accessToken
-    return Prismic.api(configuration.apiEndpoint, {accessToken}).then((api) => {
-      return {api, endpoint: configuration.apiEndpoint, accessToken, linkResolver: configuration.linkResolver};
-    });
-  }
-
-  validateOnboarding() {
-    //validate onboarding
-    const repoEndpoint = configuration.apiEndpoint.replace("/api", "");
-    fetch(repoEndpoint + '/app/settings/onboarding/run', {credentials: 'include', method: 'POST'})
-    .catch(e => console.log("Cannot access your repository, check your api endpoint"));
-  }
-
-  renderEmpty() {
-    return <div></div>
-  }
-
   renderWithContext() {
-    let myProps = this.state.customProps || {};
+    const myProps = this.state.customProps || {};
     myProps.ctx = this.state.ctx;
 
     return (
@@ -64,8 +64,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    if(this.state.withPrismic && !this.state.ctx) return this.renderEmpty()
-    else if(this.state.withPrismic && this.state.ctx) return this.renderWithContext()
-    else return this.renderComponent()
+    if (this.state.withPrismic && !this.state.ctx) return <div />;
+    else if (this.state.withPrismic && this.state.ctx) return this.renderWithContext();
+    return this.renderComponent();
   }
 }

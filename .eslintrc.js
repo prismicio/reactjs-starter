@@ -18,7 +18,7 @@ module.exports = {
       'jsx': true
     }
   },
-  'extends': 'eslint:recommended',
+  'extends': ['eslint:recommended', 'plugin:react/recommended'],
   'plugins': [
     'react'
   ]
