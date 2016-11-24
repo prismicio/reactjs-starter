@@ -1,42 +1,32 @@
 import React from 'react';
+import Config from '../prismic-configuration';
 
 export default class Help extends React.Component {
 
-  componentWillMount() {
-    const repoRegexp = new RegExp('^(https?:\/\/([\\-\\w]+)\\.[a-z]+\\.(io|dev))\/api$');
-    const match = this.props.endpoint.match(repoRegexp);
-    const repoURL = match[1];
-    const name = match[2];
-    const host = `${window.location.host}/${window.location.pathname.split('/')[1]}`;
+  static getRepositoryInfo() {
+    const repoRegexp = /^(https?:\/\/([\-\w]+)\.[a-z]+\.(io|dev))\/api$/;
+    const [, url, name] = Config.apiEndpoint.match(repoRegexp);
     const isConfigured = name !== 'your-repo-name';
-    this.setState({ name, host, repoURL, isConfigured });
+    return { url, name, isConfigured };
   }
 
-  componentDidMount() {
-    $(document).ready(() => {
-      $('pre code').each((i, block) => {
-        hljs.highlightBlock(block);
-      });
-    });
-  }
-
-  renderNavbar() {
-    const repoLink = this.state.isConfigured
-      ? <a href={this.state.repoURL} target="_blank" rel="noopener noreferrer"><strong>Go to {this.state.name}</strong></a>
+  static renderNavbar({ url, name, isConfigured }) {
+    const repoLink = isConfigured
+      ? <a href={url} target="_blank" rel="noopener noreferrer"><strong>Go to {name}</strong></a>
       : <a href="#config"><strong>Configure a repository</strong></a>;
 
     return (
       <nav>
         {repoLink}
-        <a href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt="" /></a>
+        <a target="_blank" rel="noopener noreferrer" href="https://prismic.io/docs" className="doc">Documentation<img src="images/open.svg" alt="" /></a>
       </nav>
     );
   }
 
-  renderHeader() {
+  static renderHeader(repositoryInfo) {
     return (
       <header>
-        {this.renderNavbar()}
+        {Help.renderNavbar(repositoryInfo)}
         <div className="wrapper">
           <img src="images/rocket.svg" alt="" />
           <h1>High five, you deserve it!</h1>
@@ -59,8 +49,8 @@ export default class Help extends React.Component {
     );
   }
 
-  renderBootstrapSection() {
-    if (!this.state.isConfigured) {
+  static renderBootstrapSection({ isConfigured }) {
+    if (!isConfigured) {
       return (
         <div>
           <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
@@ -190,14 +180,26 @@ render() {
     );
   }
 
+  componentDidMount() {
+    $(document).ready(() => {
+      $('pre code').each((i, block) => {
+        hljs.highlightBlock(block);
+      });
+    });
+  }
+
   render() {
+    const repositoryInfo = Help.getRepositoryInfo();
     return (
       <div id="prismic-help">
-        {this.renderHeader()}
+        {Help.renderHeader(repositoryInfo)}
         <section>
-          <p>This is a help page included in your project, it has a few useful links and example snippets to help you getting started. You can access this any time by pointing your browser to {this.state.host}.</p>
-          <h2>{this.state.isConfigured ? 'Two' : 'Three'} more steps:</h2>
-          {this.renderBootstrapSection()}
+          <p>
+            This is a help page included in your project, it has a few useful links and example snippets to help you getting started.
+            You can access this any time by pointing your browser to /help.
+          </p>
+          <h2>{repositoryInfo.isConfigured ? 'Two' : 'Three'} more steps:</h2>
+          {Help.renderBootstrapSection(repositoryInfo)}
           {Help.renderRouteSection()}
           {Help.renderTemplateSection()}
         </section>

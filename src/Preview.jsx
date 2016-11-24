@@ -14,7 +14,7 @@ export default class Preview extends React.Component {
   }
 
   componentDidMount() {
-    const token = this.props.location.query['token'];
+    const token = this.props.location.query.token;
     const url = this.props.ctx.api.previewSession(token, Config.linkResolver, '/');
     Preview.setRef(token);
     PrismicToolbar.toolbar();
@@ -26,7 +26,3 @@ export default class Preview extends React.Component {
     return <p>Loading previews...</p>;
   }
 }
-
-Preview.contextTypes = {
-  router: React.PropTypes.object,
-};
