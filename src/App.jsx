@@ -27,15 +27,7 @@ export default class App extends React.Component {
 
   componentWillMount() {
     App.validateOnboarding();
-
-    const destination = this.props.children.props.route;
-
-    this.setState({
-      withPrismic: destination.withPrismic,
-      customProps: destination.customProps,
-    });
-
-    if (destination.withPrismic) {
+    if (this.isWithPrismic()) {
       App.buildContext().then((ctx) => {
         this.setState({ ctx });
       }).catch(() => {
@@ -44,28 +36,21 @@ export default class App extends React.Component {
     }
   }
 
-  renderWithContext() {
-    const myProps = this.state.customProps || {};
-    myProps.ctx = this.state.ctx;
-
-    return (
-      <div>
-        {React.cloneElement(this.props.children, myProps)}
-      </div>
-    );
-  }
-
-  renderComponent() {
-    return (
-      <div>
-        {React.cloneElement(this.props.children, this.state.customProps || {})}
-      </div>
-    );
+  isWithPrismic() {
+    return !!this.props.children.props.route.withPrismic;
   }
 
   render() {
-    if (this.state.withPrismic && !this.state.ctx) return <div />;
-    else if (this.state.withPrismic && this.state.ctx) return this.renderWithContext();
-    return this.renderComponent();
+    if (this.isWithPrismic() && !this.state.ctx) {
+      return <div>Loading...</div>;
+    }
+
+    const props = (this.isWithPrismic && this.state.ctx) ? { ctx: this.state.ctx } : {};
+
+    return (
+      <div>
+        {React.cloneElement(this.props.children, props)}
+      </div>
+    );
   }
 }
