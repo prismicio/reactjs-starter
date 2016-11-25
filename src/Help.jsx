@@ -30,7 +30,7 @@ export default class Help extends React.Component {
         <div className="wrapper">
           <img src="images/rocket.svg" alt="" />
           <h1>High five, you deserve it!</h1>
-          <p>Grab a well deserved cup of coffee, {'you\'re'} two steps away from creating a page with dynamic content.</p>
+          <p>Grab a well deserved cup of coffee, you're two steps away from creating a page with dynamic content.</p>
         </div>
         <div className="hero-curve" />
         <div className="flip-flap">
@@ -55,7 +55,7 @@ export default class Help extends React.Component {
         <div>
           <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
           <p>
-            If you {'haven\'t'} yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
+            If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We’ve got a variety of plans including our favorite, Free!
           </p>
           <h4>Add the repository URL to your configuration</h4>
           <p>Replace the repository url in your prismic configuration with your-repo-name.prismic.io</p>
@@ -83,11 +83,12 @@ apiEndpoint: "https://your-repo-name.prismic.io/api",
         </p>
         <div className="source-code">
           <pre><code>{`
-Page.jsx
+// Page.jsx
 
 import React from 'react';
 import NotFound from './404.jsx';
 
+// Declare your component
 export default class Page extends React.Component {
     constructor(props) {
         super(props);
@@ -95,10 +96,13 @@ export default class Page extends React.Component {
     }
 
     componentWillMount() {
+        // We are using the function to get a document by its uid
         return this.props.prismicCtx.api.getByUID('<your-custom-type-id>', this.props.params.uid, {}, (err, doc) => {
             if (doc) {
+                // We put the retrieved content in the state as a doc variable
                 this.setState({ doc });
             } else {
+                // We changed the state to display error not found if no matched doc
                 this.setState({ notFound: !doc });
             }
         });
@@ -116,13 +120,13 @@ export default class Page extends React.Component {
         <p>
           Now you need to link your component to a URL by defining a route.
           <br />
-          In the following example {'we\'ll'} link a <code className="tag">/page/:uid</code> URL to the new <code className="tag">Page</code> component.
+          In the following example we'll link a <code className="tag">/page/:uid</code> URL to the new <code className="tag">Page</code> component.
           <br />
           The <code className="tag">withPrismic</code> attribute provides you with an easy way to set the prismic context as React props in your components.
         </p>
         <div className="source-code">
           <pre><code>{`
-index.jsx
+// index.jsx
 
 import Page from './page.jsx';
 
@@ -138,9 +142,11 @@ import Page from './page.jsx';
     return (
       <div>
         <h3 id="done"><span className="number">3</span>Fill a template</h3>
-        <p>Now all {'that\'s'} left to be done is display your component using the <code className="tag">render</code> function.<br />You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
+        <p>Now all that's left to be done is display your component using the <code className="tag">render</code> function.<br />You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
         <div className="source-code">
           <pre><code>{`
+// Page.jsx
+
 render() {
     if (this.state.doc) {
         return (
