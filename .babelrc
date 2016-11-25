@@ -1,4 +1,4 @@
 {
-  "plugins": ["transform-strict-mode"],
+  "plugins": ["react-hot-loader/babel", "transform-strict-mode"],
   "presets": ["es2015", "react"]
 }
