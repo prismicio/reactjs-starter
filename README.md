@@ -1,3 +1,5 @@
+[![Dependency Status](https://david-dm.org/prismicio/reactjs-starter.svg)](https://david-dm.org/prismicio/reactjs-starter)
+
 # Prismic React Starter
 
 ### To run
