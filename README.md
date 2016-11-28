@@ -1,3 +1,5 @@
+[![Dependency Status](https://david-dm.org/prismicio/reactjs-starter.svg)](https://david-dm.org/prismicio/reactjs-starter)
+
 # Prismic React Starter
 
 ### To run
@@ -23,7 +25,7 @@ You can run webpack build using this command:
 If you want to run with webpack-dev-server run this command:
 
 ```
-> $ npm run dev
+> $ npm start
 ```
 
 Open the web browser to `http://localhost:8080/`
