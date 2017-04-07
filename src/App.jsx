@@ -6,7 +6,7 @@ export default class App extends React.Component {
 
   static validateOnboarding() {
     const repoEndpoint = PrismicConfig.apiEndpoint.replace('/api', '');
-    fetch(`${repoEndpoint}/app/settings/onboarding/run`, { credentials: 'include', method: 'POST' })
+    fetch(`${repoEndpoint}/app/settings/onboarding/run`, { method: 'POST' })
       .catch(() => console.log('Cannot access your repository, check your api endpoint'));
   }
 
