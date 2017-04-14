@@ -85,34 +85,50 @@ apiEndpoint: "https://your-repo-name.prismic.io/api",
         </p>
         <div className="source-code">
           <pre><code>{`
-// Page.jsx
+// Page.js
 
 import React from 'react';
-import NotFound from './404.jsx';
+import NotFound from './NotFound';
 
 // Declare your component
 export default class Page extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { doc: null };
-    }
 
-    componentWillMount() {
-        // We are using the function to get a document by its uid
-        return this.props.prismicCtx.api.getByUID('<your-custom-type-id>', this.props.params.uid, {}, (err, doc) => {
-            if (doc) {
-                // We put the retrieved content in the state as a doc variable
-                this.setState({ doc });
-            } else {
-                // We changed the state to display error not found if no matched doc
-                this.setState({ notFound: !doc });
-            }
-        });
-    }
+  state = {
+    doc: null,
+    notFound: false,
+  }
 
-    render() {
-        // TODO
+  componentWillMount() {
+    this.fetchPage(this.props);
+  }
+
+  componentWillReceiveProps(props) {
+    this.fetchPage(props);
+  }
+
+  componentDidUpdate() {
+    this.props.prismicCtx.toolbar();
+  }
+
+  fetchPage(props) {
+    if (props.prismicCtx) {
+      // We are using the function to get a document by its uid
+      return props.prismicCtx.api.getByUID('<your-custom-type-id>', props.match.params.uid, {}, (err, doc) => {
+        if (doc) {
+          // We put the retrieved content in the state as a doc variable
+          this.setState({ doc });
+        } else {
+          // We changed the state to display error not found if no matched doc
+          this.setState({ notFound: !doc });
+        }
+      });
     }
+    return null;
+  }
+
+  render() {
+    // TODO
+  }
 }
           `}</code></pre>
         </div>
@@ -128,12 +144,12 @@ export default class Page extends React.Component {
         </p>
         <div className="source-code">
           <pre><code>{`
-// index.jsx
+// app.js
 
-import Page from './page.jsx';
+import Page from './Page';
 
-// Add the following route in your Router component before the catch all route (path="*")
-<Route path="/page/:uid" component={Page} withPrismic />
+// Add the following route in your Router component before NotFound one
+<Route exact path="/page/:uid" render={routeProps => <Page {...routeProps} prismicCtx={props.prismicCtx} />} />
           `}</code></pre>
         </div>
       </div>
@@ -144,27 +160,28 @@ import Page from './page.jsx';
     return (
       <div>
         <h3 id="done"><span className="number">3</span>Fill a template</h3>
-        <p>Now all that's left to be done is display your component using the <code className="tag">render</code> function.<br />You can get the content using the <code className="tag">doc</code> we defined above. Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
+        <p>Now all that's left to be done is display your component using the <code className="tag">render</code> function.<br />You can get the content using the <code className="tag">doc</code> we defined above.
+          <br/> Each content field is accessed using the custom type <code className="tag">API-ID</code> and the field key defined in the custom type (for example <code className="tag">page.image</code>).</p>
         <div className="source-code">
           <pre><code>{`
-// Page.jsx
+// Page.js
 
 render() {
-    if (this.state.doc) {
-        return (
-            <div>
-              {/* This is how to get an image into your template */}
-              <img src={this.state.doc.getImage("<your-custom-type-id>.<your-field-text-id>").url}/>
-              {/* This is how to get text into your template */}
-              <h1>{this.state.doc.getText("<your-custom-type-id>.<your-field-text-id>")}</h1>
-              {/* This is how to get structured text into your template */}
-              <div dangerouslySetInnerHTML={{ __html: this.state.doc.getStructuredText("<your-custom-type-id>.<your-field-text-id>").asHtml() }} />
-            </div>
-        );
-    } else if (this.state.notFound) {
-        return <NotFound />;
-    }
-    return <h1>Loading</h1>;
+  if (this.state.doc) {
+    return (
+      <div data-wio-id={this.state.doc.id}>
+        {/* This is how to get an image into your template */}
+        <img alt="cover" src={this.state.doc.getImage('page.image').url} />
+        {/* This is how to get text into your template */}
+        <h1>{this.state.doc.getText('page.title')}</h1>
+        {/* This is how to get structured text into your template */}
+        <div dangerouslySetInnerHTML={{ __html: this.state.doc.getStructuredText('page.description').asHtml() }} />
+      </div>
+    );
+  } else if (this.state.notFound) {
+    return <NotFound />;
+  }
+  return <h1>Loading</h1>;
 }
           `}</code></pre>
         </div>
@@ -178,6 +195,7 @@ render() {
   componentDidMount() {
     $(document).ready(() => {
       $('pre code').each((i, block) => {
+        console.log('here');
         hljs.highlightBlock(block);
       });
     });
