@@ -1,0 +1,15 @@
+html {
+    font-size: 100%;
+}
+
+body {
+    //-webkit-text-stroke-width: .05px;
+    //-webkit-text-stroke-color: white;
+    -webkit-font-smoothing: antialiased;
+    font-family: Lato, sans-serif;
+    font-size: 18px;
+    line-height:35px;
+    font-weight: 400;
+    letter-spacing: 0.45px;
+    color: #516677;
+}
