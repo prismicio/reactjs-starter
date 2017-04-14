@@ -4061,11 +4061,11 @@ pretty-format@^18.1.0:
   dependencies:
     ansi-styles "^2.2.1"
 
-prismic-toolbar@prismicio/prismic-toolbar#274d154:
+prismic-toolbar@0.0.1:
   version "0.0.1"
-  resolved "https://codeload.github.com/prismicio/prismic-toolbar/tar.gz/274d154"
+  resolved "https://registry.yarnpkg.com/prismic-toolbar/-/prismic-toolbar-0.0.1.tgz#3cd78a14500e7e50649db8d7b868aecdb4a69584"
   dependencies:
-    whatwg-fetch "^1.0.0"
+    whatwg-fetch "~2.0.3"
 
 prismic.io@~3.5.5:
   version "3.5.5"
@@ -5233,17 +5233,13 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.13"
 
-whatwg-fetch@2.0.2:
+whatwg-fetch@2.0.2, whatwg-fetch@>=0.10.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.2.tgz#fe294d1d89e36c5be8b3195057f2e4bc74fc980e"
 
-whatwg-fetch@>=0.10.0, whatwg-fetch@^2.0.3:
+whatwg-fetch@~2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
-
-whatwg-fetch@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-1.1.1.tgz#ac3c9d39f320c6dce5339969d054ef43dd333319"
 
 whatwg-url@^4.3.0:
   version "4.7.0"

@@ -18,6 +18,7 @@ export default class PrismicApp extends React.Component {
   }
 
   componentWillMount() {
+    PrismicApp.validateOnboarding();
     this.buildContext().then((prismicCtx) => {
       this.setState({ prismicCtx });
     }).catch((e) => {
