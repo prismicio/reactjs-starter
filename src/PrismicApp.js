@@ -12,9 +12,9 @@ export default class PrismicApp extends React.Component {
   }
 
   componentWillMount() {
-    this.buildContext().then((prismicCtx) => {
-      this.setState({ prismicCtx });
-    }).catch((e) => {
+    this.buildContext()
+    .then((prismicCtx) => this.setState({prismicCtx}))
+    .catch((e) => {
       console.error(`Cannot contact the API, check your prismic configuration:\n${e}`);
     });
   }
@@ -29,7 +29,8 @@ export default class PrismicApp extends React.Component {
 
   buildContext() {
     const accessToken = PrismicConfig.accessToken;
-    return Prismic.api(PrismicConfig.apiEndpoint, { accessToken }).then(api => ({
+    return Prismic.getApi(PrismicConfig.apiEndpoint, { accessToken })
+    .then(api => ({
       api,
       endpoint: PrismicConfig.apiEndpoint,
       accessToken,

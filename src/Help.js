@@ -12,8 +12,8 @@ export default class Help extends React.Component {
   }
 
   static getRepositoryInfo() {
-    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api$/;
-    const [, url, name] = PrismicConfig.apiEndpoint.match(repoRegexp);
+    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api(\/v2)?$/;
+    const [url, name] = PrismicConfig.apiEndpoint.match(repoRegexp);
     const isConfigured = name !== 'your-repo-name';
     return { url, name, isConfigured };
   }
@@ -96,6 +96,7 @@ apiEndpoint: "https://your-repo-name.prismic.io/api",
 // Page.js
 
 import React from 'react';
+import { RichText } from 'prismic-reactjs';
 import NotFound from './NotFound';
 
 // Declare your component
@@ -181,7 +182,7 @@ render() {
         {/* This is how to get text into your template */}
         <h1>{this.state.doc.data.<your-field-text-id>}</h1>
         {/* This is how to get structured text into your template */}
-        PrismicReact.render(this.state.doc.data.<your-field-text-id>) }} />
+        {RichText.render(this.state.doc.data.description) }
       </div>
     );
   } else if (this.state.notFound) {
