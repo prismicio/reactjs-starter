@@ -1,6 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
-import Prismic from 'prismic.io';
+import Prismic from 'prismic-javascript';
 import PrismicToolbar from 'prismic-toolbar';
 import PrismicConfig from './prismic-configuration';
 import App from './App';
