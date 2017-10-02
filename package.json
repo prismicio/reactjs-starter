@@ -7,7 +7,7 @@
     "jquery": "~3.2.1",
     "js-cookie": "~2.1.4",
     "prismic-javascript": "1.4.0",
-    "prismic-reactjs": "^0.1.0",
+    "prismic-reactjs": "~0.2.0",
     "prismic-toolbar": "0.0.2",
     "qs": "^6.4.0",
     "react": "~16.0.0",
