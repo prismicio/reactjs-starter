@@ -2,7 +2,7 @@ import React from 'react';
 
 import Cookies from 'js-cookie';
 import qs from 'qs';
-import Prismic from 'prismic.io';
+import Prismic from 'prismic-javascript';
 import PrismicConfig from './prismic-configuration';
 
 const PREVIEW_EXPIRES = 30 * 60 * 1000; // 30 minutes
