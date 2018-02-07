@@ -12,7 +12,7 @@ export default class Help extends React.Component {
   }
 
   static getRepositoryInfo() {
-    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev))\/api(\/v2)?$/;
+    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev|test))\/api(\/v2)?$/;
     const [, url, name] = PrismicConfig.apiEndpoint.match(repoRegexp);
     const isConfigured = name !== 'your-repo-name';
     return { url, name, isConfigured };
