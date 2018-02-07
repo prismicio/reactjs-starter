@@ -1,7 +1,6 @@
 import React from 'react';
 import 'whatwg-fetch';
 import Prismic from 'prismic-javascript';
-import PrismicToolbar from 'prismic-toolbar';
 import PrismicConfig from './prismic-configuration';
 import App from './App';
 
@@ -22,9 +21,9 @@ export default class PrismicApp extends React.Component {
   refreshToolbar() {
     const maybeCurrentExperiment = this.api.currentExperiment();
     if (maybeCurrentExperiment) {
-      PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
+      window.PrismicToolbar.startExperiment(maybeCurrentExperiment.googleId());
     }
-    PrismicToolbar.setup(PrismicConfig.apiEndpoint);
+    window.PrismicToolbar.setup(PrismicConfig.apiEndpoint);
   }
 
   buildContext() {

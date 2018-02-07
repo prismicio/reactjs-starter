@@ -1040,7 +1040,7 @@ babel-register@^6.24.1, babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@6.26.0, babel-runtime@^6.23.0, babel-runtime@^6.26.0:
+babel-runtime@6.26.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -3933,9 +3933,9 @@ js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
 
-js-cookie@~2.1.4:
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.1.4.tgz#da4ec503866f149d164cf25f579ef31015025d8d"
+js-cookie@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.0.tgz#1b2c279a6eece380a12168b92485265b35b1effb"
 
 js-tokens@^3.0.0:
   version "3.0.1"
@@ -5222,9 +5222,9 @@ prismic-helpers@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/prismic-helpers/-/prismic-helpers-1.0.0.tgz#8337420cf187f55fb7b7a8be755523c8696fc329"
 
-prismic-javascript@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-1.4.0.tgz#9dac6358dcff5cf459ef199f9cd8a503b2632187"
+prismic-javascript@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-1.4.1.tgz#bbdc118d5fad657c7686dd86ddb3a751f5a465b7"
   dependencies:
     fetch-everywhere "^1.0.5"
 
@@ -5242,13 +5242,6 @@ prismic-richtext@^0.2.4:
   dependencies:
     prismic-helpers "^1.0.0"
     uuid "^3.1.0"
-
-prismic-toolbar@0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/prismic-toolbar/-/prismic-toolbar-0.0.2.tgz#cbb837efc3d57558c675f7dd7a1e6cb3f1ea430a"
-  dependencies:
-    babel-runtime "^6.23.0"
-    whatwg-fetch "~2.0.3"
 
 private@^0.1.6, private@^0.1.7:
   version "0.1.7"
@@ -5399,9 +5392,18 @@ react-dev-utils@^4.1.0:
     strip-ansi "3.0.1"
     text-table "0.2.0"
 
-"react-dom@^15 || ^16", react-dom@~16.0.0:
+"react-dom@^15 || ^16":
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.0.0.tgz#9cc3079c3dcd70d4c6e01b84aab2a7e34c303f58"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
+
+react-dom@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-16.2.0.tgz#69003178601c0ca19b709b33a83369fe6124c044"
   dependencies:
     fbjs "^0.8.16"
     loose-envify "^1.1.0"
@@ -5486,7 +5488,7 @@ react-scripts@~1.0.14:
   optionalDependencies:
     fsevents "1.1.2"
 
-"react@^15 || ^16", react@~16.0.0:
+"react@^15 || ^16":
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.0.0.tgz#ce7df8f1941b036f02b2cca9dbd0cb1f0e855e2d"
   dependencies:
@@ -5504,6 +5506,15 @@ react@^15.6.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
     prop-types "^15.5.10"
+
+react@^16.2.0:
+  version "16.2.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.2.0.tgz#a31bd2dab89bff65d42134fa187f24d054c273ba"
+  dependencies:
+    fbjs "^0.8.16"
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.0"
 
 read-all-stream@^3.0.0:
   version "3.1.0"
