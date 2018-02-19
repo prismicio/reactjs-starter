@@ -5,7 +5,7 @@ import qs from 'qs';
 import Prismic from 'prismic-javascript';
 import PrismicConfig from './prismic-configuration';
 
-const PREVIEW_EXPIRES = 30 * 60 * 1000; // 30 minutes
+const PREVIEW_EXPIRES = 1/48; // 30 minutes
 
 export default class Preview extends React.Component {
 
