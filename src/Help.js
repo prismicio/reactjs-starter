@@ -1,7 +1,6 @@
 import React from 'react';
-import $ from 'jquery';
-import hljs from 'highlight.js';
 import PrismicConfig from './prismic-configuration';
+import Script from 'react-load-script'
 
 export default class Help extends React.Component {
 
@@ -206,9 +205,12 @@ render() {
 
   componentDidMount() {
     Help.validateOnboarding();
-    $(document).ready(() => {
-      $('pre code').each((i, block) => {
-        hljs.highlightBlock(block);
+  }
+
+  onJQueryLoad = () => {
+    window.$(document).ready(() => {
+      window.$('pre code').each((i, block) => {
+        window.hljs.highlightBlock(block);
       });
     });
   }
@@ -217,6 +219,8 @@ render() {
     const repositoryInfo = Help.getRepositoryInfo();
     return (
       <div id="prismic-help">
+        <Script url="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" />
+        <Script url="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" onLoad={this.onJQueryLoad} />
         {Help.renderHeader(repositoryInfo)}
         <section>
           <p>
