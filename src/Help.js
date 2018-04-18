@@ -41,7 +41,7 @@ export default class Help extends React.Component {
         <div className="wrapper">
           <img src="images/rocket.svg" alt="" />
           <h1>High five, you deserve it!</h1>
-          <p>Grab a well deserved cup of coffee, you're {repositoryInfo.isConfigured ? 'two' : 'three'} steps away from creating a page with dynamic content.</p>
+          <p>Grab a well deserved cup of coffee, you're {repositoryInfo.isConfigured ? 'four' : 'five'} steps away from creating a page with dynamic content.</p>
         </div>
         <div className="hero-curve" />
         <div className="flip-flap">
@@ -49,8 +49,10 @@ export default class Help extends React.Component {
             <div className="guide">
               <ul>
                 {firstStep}
-                <li><a href="#query"><span className="number">2</span>Create a route and retrieve content<img src="images/arrow.svg" alt="" /></a></li>
-                <li><a href="#done"><span className="number">3</span>Fill a template<img src="images/arrow.svg" alt="" /></a></li>
+                <li><a href="#custom-type"><span className="number">2</span>Setup a "Page" Custom Type<img src="images/arrow.svg" alt="" /></a></li>
+                <li><a href="#first-page"><span className="number">3</span>Create your first page<img src="images/arrow.svg" alt="" /></a></li>
+                <li><a href="#query"><span className="number">4</span>Create a route and retrieve content<img src="images/arrow.svg" alt="" /></a></li>
+                <li><a href="#done"><span className="number">5</span>Fill a template<img src="images/arrow.svg" alt="" /></a></li>
               </ul>
             </div>
             <div className="gif" />
@@ -66,10 +68,10 @@ export default class Help extends React.Component {
         <div>
           <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
           <p>
-            If you haven't yet, create a prismic.io content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
+            If you haven't yet, create a Prismic content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
           </p>
           <h4>Add the repository URL to your configuration</h4>
-          <p>Replace the repository url in your prismic configuration with your-repo-name.prismic.io</p>
+          <p>Replace the repository url in your prismic configuration with <code className="tag">your-repo-name.prismic.io</code></p>
           <div className="source-code">
             <pre><code className="js">{`// In src/prismic-configuration.js
 apiEndpoint: "https://your-repo-name.prismic.io/api/v2",`}
@@ -81,17 +83,76 @@ apiEndpoint: "https://your-repo-name.prismic.io/api/v2",`}
     return null;
   }
 
+  static renderCustomTypeSection() {
+    return (
+      <div>
+        <h3 id="custom-type"><span className="number">2</span>Setup a "Page" Custom Type</h3>
+        <p></p>
+        <h4>Create a new Custom Type</h4>
+        Go to the repository backend you've just created. Navigate to the "Custom Types" section (icon on the left navbar) and create a new Repeatable Type. For this tutorial let's name it "Page".
+        <span className="note">Before clicking on button "Create new custom type", make sure that the system automatically assigns this an API ID of <code className="tag">page</code>, because we'll use it later for querying the page.</span>
+        Once the "Page" Custom Type is created, we have to define how we want to model it. Click on "JSON editor" (right sidebar) and paste the following JSON data into the Custom Type JSON editor. When you're done, hit the "Save" button.
+        <p></p>
+        <div className="source-code">
+          <pre>
+            <code className="json">{`{
+  "Main" : {
+    "uid" : {
+      "type" : "UID",
+      "config" : {
+        "placeholder" : "UID"
+      }
+    },
+    "title" : {
+      "type" : "StructuredText",
+      "config" : {
+        "single" : "heading1",
+        "placeholder" : "Title..."
+      }
+    },
+    "description" : {
+      "type" : "StructuredText",
+      "config" : {
+        "multi" : "paragraph,em,strong,hyperlink",
+        "placeholder" : "Description..."
+      }
+    },
+    "image" : {
+      "type" : "Image"
+    }
+  }
+}`}
+              </code>
+              </pre>
+          </div>
+      </div>
+    );
+  }
+
+  static renderFirstPageSection() {
+    return (
+      <div>
+        <h3 id="first-page"><span className="number">3</span>Create your first page</h3>
+        <p>
+          The "Page" Custom Type you've just created contains a title, a paragraph, an image and a UID (unique identifier). Now it is time to fill in your first page!
+          <br/><br/>
+          Go to "Content," hit "New," &amp; fill in the corresponding fields. 
+          <span className="note">Note the value you filled in the UID field, because it will be a part of the page URL. For this example enter the value, <code className="tag">first-page</code>.</span>
+          When you're done, hit "Save" then "Publish".
+        </p>
+      </div>
+    );
+  }
+
   static renderRouteSection() {
     return (
       <div>
-        <h3 id="query"><span className="number">2</span>Create a route and retrieve content</h3>
-
-        <h4>You need to publish your content first!</h4>
+        <h3 id="query"><span className="number">4</span>Create a route and retrieve content</h3>
         <p>
           You need to create the Page component and fetch your content.
           We will query the page by its UID right before the component is mounted. Then we will update your component state.
-          <span className="note">Note that you will need to include a UID field in your Custom Type in order for this to work.</span>
-          Create a new file <code className="tag">src/Page.js</code> and paste the following code into your new file. Make sure to replace <code className="tag">{'<your-custom-type-id>'}</code> below with the API ID of your Custom Type.
+          <br/><br/>
+          Create a new file <code className="tag">src/Page.js</code> and paste the following code into your new file.
         </p>
         <div className="source-code">
           <pre><code className="jsx">{`// In src/Page.js
@@ -123,7 +184,7 @@ export default class Page extends React.Component {
   fetchPage(props) {
     if (props.prismicCtx) {
       // We are using the function to get a document by its uid
-      return props.prismicCtx.api.getByUID('<your-custom-type-id>', props.match.params.uid, {}, (err, doc) => {
+      return props.prismicCtx.api.getByUID('page', props.match.params.uid, {}, (err, doc) => {
         if (doc) {
           // We put the retrieved content in the state as a doc variable
           this.setState({ doc });
@@ -137,7 +198,7 @@ export default class Page extends React.Component {
   }
 
   render() {
-    // We will fill in this section in Step 3...
+    // We will fill in this section in Step 5...
     return null;
   }
 }`}
@@ -168,12 +229,12 @@ import Page from './Page';
   static renderTemplateSection() {
     return (
       <div>
-        <h3 id="done"><span className="number">3</span>Fill a template</h3>
+        <h3 id="done"><span className="number">5</span>Fill a template</h3>
         <p>
           Now all that's left to be done is to display your component using the <code className="tag">render</code> function.
         </p>
         <p>
-          You can get the content using the <code className="tag">doc</code> state variable we defined above. All the content fields are accessed using their <code className="tag">API-IDs</code>. For example if you have an image field with the API-ID <code className="tag">main_image</code>, then you can access the image content with <code className="tag">this.state.doc.data.<strong>main_image</strong></code>.
+          You can get the content using the <code className="tag">doc</code> state variable we defined above. All the content fields are accessed using their <code className="tag">API-IDs</code>.
         </p>
         <div className="source-code">
           <pre><code>{`// In src/Page.js
@@ -183,11 +244,11 @@ render() {
     return (
       <div data-wio-id={this.state.doc.id}>
         {/* This is how to get an image into your template */}
-        <img alt="cover" src={this.state.doc.data.`}<strong>{`your_image_field_id`}</strong>{`.url} />
+        <img alt="cover" src={this.state.doc.data.image.url} />
         {/* This is how to insert a Rich Text field as plain text */}
-        <h1>{PrismicReact.RichText.asText(this.state.doc.data.`}<strong>{`your_text_field_id`}</strong>{`)}</h1>
+        <h1>{PrismicReact.RichText.asText(this.state.doc.data.title)}</h1>
         {/* This is how to insert a Rich Text field into your template as html */}
-        {PrismicReact.RichText.render(this.state.doc.data.`}<strong>your_description_field_id</strong>{`, this.props.prismicCtx.linkResolver)}
+        {PrismicReact.RichText.render(this.state.doc.data.description, this.props.prismicCtx.linkResolver)}
       </div>
     );
   } else if (this.state.notFound) {
@@ -197,6 +258,7 @@ render() {
 }`}
           </code></pre>
         </div>
+        <p>In your browser go to <a href="/page/first-page">localhost:3000/page/first-page</a> and you're done! You've officially created a page that pulls content from Prismic.<br/></p>
         <p>
           To discover how to get all the fields go to <a href="https://prismic.io/docs/reactjs/rendering/the-response-object" rel="noopener noreferrer" target="_blank">the prismic documentation</a>.
         </p>
@@ -223,8 +285,10 @@ render() {
             This is a help page included in your project, it has a few useful links and example snippets to help you getting started.
             You can access this any time by pointing your browser to localhost:3000/help.
           </p>
-          <h2>{repositoryInfo.isConfigured ? 'Two' : 'Three'} more steps:</h2>
+          <h2>{repositoryInfo.isConfigured ? 'Four' : 'Five'} more steps:</h2>
           {Help.renderBootstrapSection(repositoryInfo)}
+          {Help.renderCustomTypeSection()}
+          {Help.renderFirstPageSection()}
           {Help.renderRouteSection()}
           {Help.renderTemplateSection()}
         </section>

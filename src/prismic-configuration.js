@@ -12,7 +12,8 @@ export default {
   // -- Links resolution rules
   // This function will be used to generate links to Prismic.io documents
   // As your project grows, you should update this function according to your routes
-  linkResolver(doc, ctx) {
+  linkResolver(doc) {
+    if (doc.type === 'page') return `/page/${doc.uid}`;
     return '/';
   },
 };
