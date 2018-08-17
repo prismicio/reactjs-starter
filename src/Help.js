@@ -91,7 +91,7 @@ apiEndpoint: "https://your-repo-name.prismic.io/api/v2",`}
         <h4>Create a new Custom Type</h4>
         Go to the repository backend you've just created. Navigate to the "Custom Types" section (icon on the left navbar) and create a new Repeatable Type. For this tutorial let's name it "Page".
         <span className="note">Before clicking on button "Create new custom type", make sure that the system automatically assigns this an API ID of <code className="tag">page</code>, because we'll use it later for querying the page.</span>
-        Once the "Page" Custom Type is created, we have to define how we want to model it. Click on "JSON editor" (right sidebar) and paste the following JSON data into the Custom Type JSON editor. When you're done, hit the "Save" button.
+        Once the "Page" Custom Type is created, we have to define how we want to model it. Click on "JSON editor" (right sidebar) and paste the following JSON data into the Custom Type JSON editor. When you're done, hit the <code className="tag">Save</code> button.
         <p></p>
         <div className="source-code">
           <pre>
@@ -138,7 +138,7 @@ apiEndpoint: "https://your-repo-name.prismic.io/api/v2",`}
           <br/><br/>
           Go to "Content," hit "New," &amp; fill in the corresponding fields. 
           <span className="note">Note the value you filled in the UID field, because it will be a part of the page URL. For this example enter the value, <code className="tag">first-page</code>.</span>
-          When you're done, hit "Save" then "Publish".
+          When you're done, hit <code className="tag">Save</code> then <code className="tag">Publish</code>.
         </p>
       </div>
     );
