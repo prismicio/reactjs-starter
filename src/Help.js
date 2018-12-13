@@ -32,23 +32,20 @@ export default class Help extends React.Component {
   }
 
   static renderHeader(repositoryInfo) {
-    const firstStep = repositoryInfo.isConfigured
-      ? <li className="done"><span className="number">1</span>Bootstrap your project</li>
-      : <li><a href="#config"><span className="number">1</span>Bootstrap your project<img src="images/arrow.svg" alt="" /></a></li>
     return (
       <header>
         {Help.renderNavbar(repositoryInfo)}
         <div className="wrapper">
           <img src="images/rocket.svg" alt="" />
           <h1>High five, you deserve it!</h1>
-          <p>Grab a well deserved cup of coffee, you're {repositoryInfo.isConfigured ? 'four' : 'five'} steps away from creating a page with dynamic content.</p>
+          <p>Grab a well deserved cup of coffee, you're five steps away from creating a page with dynamic content.</p>
         </div>
         <div className="hero-curve" />
         <div className="flip-flap">
           <div className="flipper">
             <div className="guide">
               <ul>
-                {firstStep}
+                <li><a href="#config"><span className="number">1</span>Bootstrap your project<img src="images/arrow.svg" alt="" /></a></li>
                 <li><a href="#custom-type"><span className="number">2</span>Setup a "Page" Custom Type<img src="images/arrow.svg" alt="" /></a></li>
                 <li><a href="#first-page"><span className="number">3</span>Create your first page<img src="images/arrow.svg" alt="" /></a></li>
                 <li><a href="#query"><span className="number">4</span>Create a route and retrieve content<img src="images/arrow.svg" alt="" /></a></li>
@@ -62,25 +59,34 @@ export default class Help extends React.Component {
     );
   }
 
-  static renderBootstrapSection({ isConfigured }) {
-    if (!isConfigured) {
-      return (
-        <div>
-          <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
-          <p>
-            If you haven't yet, create a Prismic content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
-          </p>
-          <h4>Add the repository URL to your configuration</h4>
-          <p>Replace the repository url in your prismic configuration with <code className="tag">your-repo-name.prismic.io</code></p>
-          <div className="source-code">
-            <pre><code className="js">{`// In src/prismic-configuration.js
+  static renderBootstrapSection() {
+    return (
+      <div>
+        <h3 id="config"><span className="number">1</span>Bootstrap your project</h3>
+        <p>
+          If you haven't yet, create a Prismic content repository. A repository is where your website’s content will live. Simply <a href="https://prismic.io/#create" target="_blank" rel="noopener noreferrer">create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
+        </p>
+        <h4>Add the repository URL to your configuration</h4>
+        <p>Replace the repository url in your prismic configuration with <code className="tag">your-repo-name.prismic.io</code></p>
+        <div className="source-code">
+          <pre><code className="js">{`// In src/prismic-configuration.js
 apiEndpoint: "https://your-repo-name.prismic.io/api/v2",`}
-            </code></pre>
-          </div>
+          </code></pre>
         </div>
-      );
-    }
-    return null;
+        <h4>Add the repository URL to your index.html</h4>
+        <p>Replace the repository url in your prismic configuration with <code className="tag">your-repo-name.prismic.io</code></p>
+        <div className="source-code">
+          <pre><code className="js">{`// In public/index.html
+<script>
+  window.prismic = {
+    endpoint: 'https://your-repo-name.prismic.io/api/v2'
+  };
+</script>`}
+          </code></pre>
+        </div>
+        <p>This will ensure that your edit buttons and previews work properly.</p>
+      </div>
+    );
   }
 
   static renderCustomTypeSection() {
@@ -285,8 +291,8 @@ render() {
             This is a help page included in your project, it has a few useful links and example snippets to help you getting started.
             You can access this any time by pointing your browser to localhost:3000/help.
           </p>
-          <h2>{repositoryInfo.isConfigured ? 'Four' : 'Five'} more steps:</h2>
-          {Help.renderBootstrapSection(repositoryInfo)}
+          <h2>Five more steps:</h2>
+          {Help.renderBootstrapSection()}
           {Help.renderCustomTypeSection()}
           {Help.renderFirstPageSection()}
           {Help.renderRouteSection()}
