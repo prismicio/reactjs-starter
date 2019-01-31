@@ -5,12 +5,6 @@ import PrismicConfig from './prismic-configuration';
 
 export default class Help extends React.Component {
 
-  static validateOnboarding() {
-    const repoEndpoint = PrismicConfig.apiEndpoint.replace('/api/v2', '');
-    fetch(`${repoEndpoint}/app/settings/onboarding/run`, { method: 'POST' })
-      .catch(() => console.log('Cannot access your repository, check your api endpoint'));
-  }
-
   static getRepositoryInfo() {
     const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev|test))\/api(\/v2)?$/;
     const [, url, name] = PrismicConfig.apiEndpoint.match(repoRegexp);
@@ -169,22 +163,23 @@ import PrismicReact from 'prismic-reactjs';
 
 // Declare your component
 export default class Page extends React.Component {
-
-  state = {
-    doc: null,
-    notFound: false,
+  constructor(props){
+    super(props);
+    this.state = {
+      doc: null,
+      notFound: false,
+    }
+    if (props.prismicCtx) {
+      this.fetchPage(props);
+    }
   }
 
-  componentWillMount() {
-    this.fetchPage(this.props);
-  }
-
-  componentWillReceiveProps(props) {
-    this.fetchPage(props);
-  }
-
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     this.props.prismicCtx.toolbar();
+    // We fetch the page only after it's ready to query the api
+    if (!prevProps.prismicCtx) {
+      this.fetchPage(this.props);
+    }
   }
 
   fetchPage(props) {
@@ -273,7 +268,6 @@ render() {
   }
 
   componentDidMount() {
-    Help.validateOnboarding();
     $(document).ready(() => {
       $('pre code').each((i, block) => {
         hljs.highlightBlock(block);

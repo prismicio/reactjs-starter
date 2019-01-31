@@ -5,12 +5,9 @@ import PrismicConfig from './prismic-configuration';
 import App from './App';
 
 export default class PrismicApp extends React.Component {
-
-  state = {
-    prismicCtx: null,
-  }
-
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+    this.state = { prismicCtx: null };
     this.buildContext().then((prismicCtx) => {
       this.setState({ prismicCtx });
     }).catch((e) => {
