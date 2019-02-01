@@ -8,7 +8,6 @@ import {
 import Preview from './Preview';
 import Help from './Help';
 import NotFound from './NotFound';
-import './App.css';
 
 const App = (props) => (
   <Router>
