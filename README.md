@@ -23,7 +23,10 @@ Build and open your browser to http://localhost:3000.
 > $ npm run build
 ```
 
-### Get started with prismic.io
+### Deployment
+This project is ready for deployment using [Netlify](https://www.netlify.com), if you're interested in deploying to other platforms review the suggested [solutions](https://facebook.github.io/create-react-app/docs/deployment).
+
+### Get started with Prismic
 
 You can find out how to get started with prismic.io from [our React documentation](https://prismic.io/docs/reactjs/getting-started/getting-started-from-scratch).
 
