@@ -1,23 +1,22 @@
-import React from 'react';
+import React from 'react'
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Switch,
-  Redirect,
-} from 'react-router-dom';
-import Preview from './Preview';
-import Help from './Help';
-import NotFound from './NotFound';
+  Redirect
+} from 'react-router-dom'
+import { Help, NotFound } from './pages'
+import Preview from './Preview'
 
 const App = (props) => (
-  <Router>
+  <BrowserRouter>
     <Switch>
-      <Redirect exact from="/" to="/help"/>
-      <Route exact path="/help" component={Help} />
-      <Route exact path="/preview" render={routeProps => <Preview {...routeProps} prismicCtx={props.prismicCtx} />} />
+      <Redirect exact from='/' to='/help' />
+      <Route exact path='/help' component={Help} />
+      <Route exact path='/preview' component={Preview} />
       <Route component={NotFound} />
     </Switch>
-  </Router>
-);
+  </BrowserRouter>
+)
 
-export default App;
+export default App
