@@ -53,6 +53,9 @@ const Help = () => {
     <div>
       <h3 id='config'><span className='number'>1</span>Bootstrap your project</h3>
       <p>
+        Did you start this project with the help of our Command Line tool? If so, then your Prismic repository has already been created and setup with your first Custom Type. Feel free to jump ahead and <a href='#first-page'>Create your first page</a>. If that's not the case, don't worry! It's only a couple steps to get you set up.
+      </p>
+      <p>
         If you haven't yet, create a Prismic content repository. A repository is where your website’s content will live. Simply <a href='https://prismic.io/#create' target='_blank' rel='noopener noreferrer'>create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
       </p>
       <h4>Add the repository URL to your configuration</h4>

@@ -1,21 +1,33 @@
 [![Dependency Status](https://david-dm.org/prismicio/reactjs-starter.svg)](https://david-dm.org/prismicio/reactjs-starter)
 
 # Prismic React Starter
-This project has been created with [`create-react-app`](https://github.com/facebookincubator/create-react-app). We added a zest of [prismic](https://github.com/prismicio/javascript-kit) inside it.
+This project has been created with [`create-react-app`](https://github.com/facebookincubator/create-react-app). We added a zest of [prismic](https://github.com/prismicio/javascript-kit) inside it. It serves as a boilerplate React+Prismic application that will serves as a quick guide to get your own applications off the ground
+
+### Quick bootstrap
+The fastest way to run get started from scratch is using the Prismic command line tool to install the starter codebase, create a new Prismic repository and setup the Page custom type with only a few commands.
+```bash
+$ npm install -g prismic-cli
+$ prismic new
+```
+Select a name for your new Prismic repository, the local folder for your project and finally select `React` to bootstrap the React.js starter project. The dependencies will be installed as well, so once the process is done, just navigate to the folder and run the app with `npm start`
+
+Follow along with the Help's page instructions. You can safely ignore the instructions in the first two steps regarding creating a new repository and the Page custom type, the Prismic tool has taken care of that for you.
+
+*Note: You will still need to setup your repository name in `public/index.html`*
 
 ### Install dependencies
 ```
-> $ npm install
+$ npm install
 ```
 ### Runs the app in the development mode
 Build and open your browser to http://localhost:3000.
 ```
-> $ npm start
+$ npm start
 ```
 
 ### Builds the app for production to the build folder
 ```
-> $ npm run build
+$ npm run build
 ```
 
 ### Deployment
