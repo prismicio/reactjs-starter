@@ -239,11 +239,9 @@ import Page from './pages/Page'
     </div>
   )
 
-  const onJQueryLoad = () => {
-    window.$(document).ready(() => {
-      window.$('pre code').each((i, block) => {
-        window.hljs.highlightBlock(block)
-      })
+  const onHighlightLoad = () => {
+    document.querySelectorAll('pre code').forEach(block => {
+      window.hljs.highlightBlock(block)
     })
   }
 
@@ -251,8 +249,7 @@ import Page from './pages/Page'
 
   return (
     <div id='prismic-help'>
-      <Script url='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js' />
-      <Script url='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js' onLoad={onJQueryLoad} />
+      <Script url='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js' onLoad={onHighlightLoad} />
       {renderHeader(repositoryInfo)}
       <section>
         <p>
