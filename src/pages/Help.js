@@ -4,8 +4,9 @@ import Script from 'react-load-script'
 
 const Help = () => {
   const getRepositoryInfo = () => {
-    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.(io|dev|test))\/(api(\/v2)?|graphql)$/
-    const [, url, name] = apiEndpoint.match(repoRegexp)
+    const repoRegexp = /^(https?:\/\/([-\w]+)\.[a-z]+\.[a-z]+\.(io|dev|test))\/(api(\/v2)?|graphql)$/
+    let [, url, name] = apiEndpoint.match(repoRegexp)
+    url = url.replace('.cdn', '')
     const isConfigured = name !== 'your-repo-name'
     return { url, name, isConfigured }
   }
