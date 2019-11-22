@@ -7,8 +7,7 @@ import {
   Redirect
 } from 'react-router-dom'
 import { apiEndpoint } from './prismic-configuration'
-import { Help, NotFound } from './pages'
-import Preview from './Preview'
+import { Help, Preview, NotFound } from './pages'
 
 const App = (props) => {
   const repoNameArray = /([^/]+)\.cdn.prismic\.io\/api/.exec(apiEndpoint);

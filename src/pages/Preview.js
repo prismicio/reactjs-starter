@@ -1,8 +1,10 @@
 import { useEffect } from 'react'
 import qs from 'qs'
+import { client, linkResolver } from '../prismic-configuration'
 
-import { client, linkResolver } from './prismic-configuration'
-
+/**
+ * Prismic preview endpoint component
+ */
 const Preview = ({ history, location }) => {
   useEffect(() => {
     const params = qs.parse(location.search.slice(1))
