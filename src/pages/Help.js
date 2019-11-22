@@ -60,26 +60,14 @@ const Help = () => {
         If you haven't yet, create a Prismic content repository. A repository is where your website’s content will live. Simply <a href='https://prismic.io/#create' target='_blank' rel='noopener noreferrer'>create one</a> by choosing a repository name and a plan. We've got a variety of plans including our favorite, Free!
       </p>
       <h4>Add the repository URL to your configuration</h4>
-      <p>Replace the repository url in your prismic configuration with <code className='tag'>your-repo-name.prismic.io</code></p>
+      <p>Replace the repository url in your prismic configuration with <code className='tag'>your-repo-name.cdn.prismic.io</code></p>
       <div className='source-code'>
         <pre><code className='js'>{
           `// In src/prismic-configuration.js
-export const apiEndpoint: "https://your-repo-name.prismic.io/api/v2"
+export const apiEndpoint: "https://your-repo-name.cdn.prismic.io/api/v2"
 `}
         </code></pre>
       </div>
-      <h4>Add the repository URL to your index.html</h4>
-      <p>Replace the repository url in your prismic configuration with <code className='tag'>your-repo-name.prismic.io</code></p>
-      <div className='source-code'>
-        <pre><code className='js'>{`// In public/index.html
-<script>
-window.prismic = {
-  endpoint: 'https://your-repo-name.prismic.io/api/v2'
-};
-</script>`}
-        </code></pre>
-      </div>
-      <p>This will ensure that your edit buttons and previews work properly.</p>
     </div>
   )
 

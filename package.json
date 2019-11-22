@@ -8,6 +8,7 @@
     "qs": "^6.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-helmet": "^5.2.1",
     "react-load-script": "0.0.6",
     "react-router-dom": "^5.1.2",
     "whatwg-fetch": "^3.0.0"
