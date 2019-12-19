@@ -10,7 +10,7 @@ import { apiEndpoint } from './prismic-configuration'
 import { Help, Preview, NotFound } from './pages'
 
 /**
- * Main application componenet
+ * Main application component
  */
 const App = (props) => {
   const repoNameArray = /([^/]+)\.cdn.prismic\.io\/api/.exec(apiEndpoint)
