@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 /**
- * Page not found (404) componenet
+ * Page not found (404) component
  */
 const NotFound = () => {
   return (
